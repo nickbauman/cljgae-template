@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cronentries>
+  <cron>
+    <url>/_ereporter/?sender={{name}}@gmail.com</url>
+    <target>default</target>
+    <description>Daily exception report</description>
+    <schedule>every day 03:00</schedule>
+    <timezone>America/Chicago</timezone>
+  </cron>
+</cronentries>

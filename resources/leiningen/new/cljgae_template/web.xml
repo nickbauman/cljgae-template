@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?><web-app>
+  <listener>
+    <listener-class>{{sanitized}}.listener</listener-class>
+  </listener>
+  <servlet>
+    <servlet-name>{{name}}.handler/app servlet</servlet-name>
+    <servlet-class>{{sanitized}}.servlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>{{name}}.handler/app servlet</servlet-name>
+    <url-pattern>/*</url-pattern>
+  </servlet-mapping>
+
+  <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>admin</web-resource-name>
+            <url-pattern>/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>admin</role-name>
+        </auth-constraint>
+    </security-constraint>
+</web-app>
