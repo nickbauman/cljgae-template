@@ -4,7 +4,9 @@
           LocalServiceTestHelper 
           LocalFileServiceTestConfig 
           LocalDatastoreServiceTestConfig
-          LocalTaskQueueTestConfig])
+          LocalTaskQueueTestConfig
+          LocalAppIdentityServiceTestConfig
+          LocalBlobstoreServiceTestConfig])
 (:require [clojure.java.io :as io])
 (:use clojure.test
       ring.mock.request
@@ -26,11 +28,30 @@
     (.setQueueXmlPath "war-resources/WEB-INF/queue.xml")
     (.setDisableAutoTaskExecution true)))
 
+(defn- datastore-config []
+  (doto 
+      (LocalDatastoreServiceTestConfig.)
+    (.setApplyAllHighRepJobPolicy)
+    (.setNoStorage true)))
+
+(defn- blobstore-config []
+  (doto 
+      (LocalBlobstoreServiceTestConfig.) 
+    (.setNoStorage true)))
+
+(defn- app-identity-config []
+  (doto
+      (LocalAppIdentityServiceTestConfig.)
+    (.setDefaultGcsBucketName "default-bucket")))
+
+(defn- fileservice-config [] 
+  (LocalFileServiceTestConfig.))
+
 (defn- create-local-test-helper []
-  (LocalServiceTestHelper. (into-array LocalServiceTestConfig [(LocalFileServiceTestConfig.) 
-                                                               (doto 
-                                                                   (LocalDatastoreServiceTestConfig.) 
-                                                                 (.setNoStorage true))
+  (LocalServiceTestHelper. (into-array LocalServiceTestConfig [(fileservice-config)
+                                                               (app-identity-config)
+                                                               (blobstore-config)
+                                                               (datastore-config)
                                                                (queue-config)])))
 
 (defn setup-local-service-test-helper [f] 

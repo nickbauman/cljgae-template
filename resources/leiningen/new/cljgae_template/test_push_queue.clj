@@ -1,6 +1,9 @@
 (ns {{name}}.test.push-queue
   (:require [clojure.test :refer :all]
+            [{{name}}.test.fixtures :as fixtures]
             [{{name}}.push-queue :refer :all]))
+
+(use-fixtures :once fixtures/setup-local-service-test-helper)
 
 (deftest test-task-options
   (testing "no params"

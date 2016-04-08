@@ -3,6 +3,7 @@
             [compojure.handler :as handler]
             [compojure.route :as route]
             [ring.middleware.session :as session]
+            [ring.middleware.multipart-params :as multipart-params]
             [clojure.tools.logging :as log]
             [clj-time.core :as t]
             [clojure.java.io :as io]
@@ -12,6 +13,7 @@
             [{{name}}.db :as db]
             [{{name}}.env :as env]
             [{{name}}.model :as m]
+            [{{name}}.util :as u]
             [{{name}}.view :refer [home]]))
 
 (defn init []
@@ -27,12 +29,12 @@
   - filename: the remote file to import
   - request: the netire Ring request"
   [filename request]
-    (log/debugf "Saving file %s" filename)
-    ; TODO make this happen as a background task instead of in the forground
+  (log/debugf "Saving file %1$s" filename)
+  (let [uploaded-binary (u/get-named-file-contents "file" request)]
     (gcs/with-gcs-output-stream gcs-writer env/gcs-bucket-name filename
-      (io/copy (.getInputStream request) gcs-writer)
+      (.write gcs-writer uploaded-binary)
       (db/save! (m/create-FileUpload filename (t/now)))
-      (log/infof "Succesfully wrote %1$s to /%2$s/%1$s" filename env/gcs-bucket-name)))
+      (log/infof "Succesfully wrote %1$s to /%2$s/%1$s" filename env/gcs-bucket-name))))
 
 (defroutes app-routes
   (GET "/" [:as r] (home r))
@@ -42,5 +44,6 @@
 (def app
   (-> (routes app-routes)
       (handler/api)
-      (session/wrap-session)))
+      (session/wrap-session)
+      (multipart-params/wrap-multipart-params)))
 

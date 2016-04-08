@@ -40,5 +40,6 @@
    {:dependencies [[ring/ring-mock "0.3.0"] 
                    [ring/ring-devel "1.4.0"]
                    [com.google.appengine/appengine-testing ~appengine-version]
+                   [com.google.appengine/appengine-api-labs ~appengine-version]
                    [com.google.appengine/appengine-api-stubs ~appengine-version]
                    [com.google.appengine/appengine-tools-sdk ~appengine-version]]}})
