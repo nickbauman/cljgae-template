@@ -4,7 +4,8 @@
   (:require [{{name}}.env :as env]
             [{{name}}.gcs :as gcs]
             [{{name}}.test.fixtures :as fixtures]
-            [{{name}}.util :refer [try-with-default gen-file-upload-url]]
+            [{{name}}.util :refer [try-with-default]]
+            [clojure.java.io :as io]
             [clj-time.core :as t])
   (:use clojure.test
     ring.mock.request
@@ -33,13 +34,21 @@
   (testing "not-found route"
     (let [response (app (request :get "/invalid"))]
       (is (= (:status response) 404))))
-  
+
   (testing "upload file"
-    (let [expected-filename "example.txt"
-          gend-upload-url (gen-file-upload-url (str "/save/" expected-filename))
-          _ (println gend-upload-url)
-          response (app (request :post gend-upload-url {:file (clojure.java.io/file "file_example.jpg")}))
-          input-channel (gcs/open-input-channel env/gcs-bucket-name expected-filename)]
+    (let [expected-filename "foobarbaz/test/file_example.jpg"
+          expected-file-contents (slurp (io/file (io/resource expected-filename)))
+          gend-upload-url (gcs/gen-file-upload-url (str "/save"))
+          req (->
+               (request :post "/save" {:multipart-params {:file expected-file-contents :filename expected-filename}})
+               (update :headers assoc
+                       "content-type" "multipart/form-data; boundary=ABCD")
+               (assoc :content-type "multipart/form-data; boundary=ABCD")
+               (assoc :enctype "multipart/form-data"))
+          response (app req)
+          input-channel (gcs/open-input-channel env/gcs-bucket-name expected-filename)
+          actual-filecontents (try-with-default "Not Found!" (slurp (gcs/to-input-stream input-channel)))]
+      
       (is (= (:status response) 201))
-      ; not working yet
-      (is (= "fail" (try-with-default "Not Found!" (slurp (gcs/to-input-stream input-channel))))))))
+      (is (= (type expected-file-contents) (type actual-filecontents)))
+      (is (= expected-file-contents actual-filecontents)))))

@@ -13,7 +13,6 @@
             [{{name}}.db :as db]
             [{{name}}.env :as env]
             [{{name}}.model :as m]
-            [{{name}}.util :as u]
             [{{name}}.view :refer [home]]))
 
 (defn init []
@@ -30,7 +29,7 @@
   - request: the netire Ring request"
   [filename request]
   (log/debugf "Saving file %1$s" filename)
-  (let [uploaded-binary (u/get-named-file-contents "file" request)]
+  (let [uploaded-binary (gcs/get-named-file-contents "file" request)]
     (gcs/with-gcs-output-stream gcs-writer env/gcs-bucket-name filename
       (.write gcs-writer uploaded-binary)
       (db/save! (m/create-FileUpload filename (t/now)))

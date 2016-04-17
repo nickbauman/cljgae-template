@@ -24,6 +24,7 @@
              ["src/{{sanitized}}/util.clj" (render "util.clj" data)]
              ["src/{{sanitized}}/view.clj" (render "view.clj" data)]
              ; tests
+             ["test/{{sanitized}}/test/file_example.jpg" (render "file_example.jpg" data)]
              ["test/{{sanitized}}/test/fixtures.clj" (render "fixtures.clj" data)]
              ["test/{{sanitized}}/test/appengine.clj" (render "test_appengine.clj" data)]
              ["test/{{sanitized}}/test/db.clj" (render "test_db.clj" data)]

@@ -8,8 +8,8 @@
                  [compojure "1.5.0"]
                  [hiccup "1.0.5"]
                  [ring-server "0.4.0"]
-                 [org.slf4j/slf4j-jdk14 "1.7.19"]
                  [org.clojure/tools.logging "0.3.1"]
+                 [ch.qos.logback/logback-classic "1.1.7"]
                  [com.google.guava/guava "19.0"]
                  [com.google.appengine/appengine-api-1.0-sdk ~appengine-version]
                  [com.google.appengine.tools/appengine-gcs-client "0.5"
