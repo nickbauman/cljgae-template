@@ -9,3 +9,4 @@
       (do 
         (log/warn (str "Failed with " (type ~'ex) ": " (.getMessage ~'ex) ". Defaulting to " ~default))
         ~default) )))
+

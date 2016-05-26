@@ -8,8 +8,9 @@
                  [compojure "1.5.0"]
                  [hiccup "1.0.5"]
                  [ring-server "0.4.0"]
-                 [org.slf4j/slf4j-jdk14 "1.7.19"]
+                 [ring/ring-defaults "0.2.0"]
                  [org.clojure/tools.logging "0.3.1"]
+                 [ch.qos.logback/logback-classic "1.1.7"]
                  [com.google.guava/guava "19.0"]
                  [com.google.appengine/appengine-api-1.0-sdk ~appengine-version]
                  [com.google.appengine.tools/appengine-gcs-client "0.5"
@@ -40,5 +41,6 @@
    {:dependencies [[ring/ring-mock "0.3.0"] 
                    [ring/ring-devel "1.4.0"]
                    [com.google.appengine/appengine-testing ~appengine-version]
+                   [com.google.appengine/appengine-api-labs ~appengine-version]
                    [com.google.appengine/appengine-api-stubs ~appengine-version]
                    [com.google.appengine/appengine-tools-sdk ~appengine-version]]}})

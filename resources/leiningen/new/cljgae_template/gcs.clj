@@ -3,6 +3,7 @@
                                                     GcsServiceFactory
                                                     GcsFilename
                                                     GcsFileOptions$Builder]
+           [com.google.appengine.api.blobstore BlobstoreService BlobstoreServiceFactory]
            [java.nio.channels Channels]))
 
 (def ^:private file-options 
@@ -46,3 +47,27 @@
       (do ~@body)
      (finally
         (.close ~'gcs-reader)))))
+
+; Blobstore support
+
+(defn get-blobstore-service []
+  "Get the BlobStoreService, factory construct if necessary"
+  (BlobstoreServiceFactory/getBlobstoreService))
+
+(defn gen-file-upload-url [success-uri]
+  "Generate a blobstore upload URL"
+  (.createUploadUrl (get-blobstore-service) success-uri))
+
+(defn do-serve-blob
+  ([^GcsFilename gcs-filename http-response]
+   "Serve a file from GCS using the blobstore API from a GcsFilename"
+   (do-serve-blob ((.getBucketName gcs-filename) (.getObjectName gcs-filename) http-response)))
+  ([bucket-name object-name http-response]
+   "Serve a file from GCS using the blobstore API from a bucket name and an object name/path-like string"
+   (let [blob-key (.createGsBlobKey (get-blobstore-service) (str "/gs/" bucket-name "/" object-name))]
+     (.serve (get-blobstore-service) blob-key http-response))))
+
+(defn get-named-file-contents
+  [form-element-name request]
+  "Retrieve a blob uploaded named after its form element name from a request"
+  (.get (.getUploadedBlobs (get-blobstore-service) request) form-element-name))

@@ -8,6 +8,20 @@ You will need [FIXME][1]
 
 [1]: https://github.com/FIXME/FIXME
 
+## Building
+
+To build a deployable WAR:
+
+    > lein ring uberwar
+
+This requires that the App Engine Java SDK is installed locally and in your path.
+
+## Automated testing
+
+Through leiningen
+
+    > lein test
+
 ## Running
 
 To Run locally:
@@ -26,4 +40,4 @@ This requires that the App Engine Java SDK is installed locally and in your path
 
 ## License
 
-Copyright © {{year}} FIXME
+Copyright © 2016 FIXME
