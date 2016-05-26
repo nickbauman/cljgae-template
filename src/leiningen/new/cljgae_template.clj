@@ -29,6 +29,7 @@
              ["test/{{sanitized}}/test/appengine.clj" (render "test_appengine.clj" data)]
              ["test/{{sanitized}}/test/db.clj" (render "test_db.clj" data)]
              ["test/{{sanitized}}/test/handler.clj" (render "test_handler.clj" data)]
+             ["test/{{sanitized}}/test/helpers.clj" (render "helpers.clj" data)]
              ["test/{{sanitized}}/test/push_queue.clj" (render "test_push_queue.clj" data)]
              ["test/{{sanitized}}/test/util.clj" (render "test_util.clj" data)]
              ; WEB-INF

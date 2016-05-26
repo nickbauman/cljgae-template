@@ -8,6 +8,7 @@
                  [compojure "1.5.0"]
                  [hiccup "1.0.5"]
                  [ring-server "0.4.0"]
+                 [ring/ring-defaults "0.2.0"]
                  [org.clojure/tools.logging "0.3.1"]
                  [ch.qos.logback/logback-classic "1.1.7"]
                  [com.google.guava/guava "19.0"]

@@ -3,6 +3,8 @@
            [com.google.appengine.api.taskqueue.dev LocalTaskQueue])
   (:require [{{name}}.env :as env]
             [{{name}}.gcs :as gcs]
+            [{{name}}.handler :as handler]
+            [{{name}}.test.helpers :as helper]
             [{{name}}.test.fixtures :as fixtures]
             [{{name}}.util :refer [try-with-default]]
             [clojure.java.io :as io]
@@ -36,19 +38,11 @@
       (is (= (:status response) 404))))
 
   (testing "upload file"
-    (let [expected-filename "foobarbaz/test/file_example.jpg"
-          expected-file-contents (slurp (io/file (io/resource expected-filename)))
-          gend-upload-url (gcs/gen-file-upload-url (str "/save"))
-          req (->
-               (request :post "/save" {:multipart-params {:file expected-file-contents :filename expected-filename}})
-               (update :headers assoc
-                       "content-type" "multipart/form-data; boundary=ABCD")
-               (assoc :content-type "multipart/form-data; boundary=ABCD")
-               (assoc :enctype "multipart/form-data"))
-          response (app req)
+    (let [expected-filename "test/foobarbaz/test/file_example.jpg"
+          temp-file (helper/create-temp-file expected-filename)
+          file-data (helper/get-file-contents (.getAbsolutePath temp-file))
+          response (handler/do-save {"thefile" {:bytes file-data :content-type "image/jpeg" :filename expected-filename}})
           input-channel (gcs/open-input-channel env/gcs-bucket-name expected-filename)
           actual-filecontents (try-with-default "Not Found!" (slurp (gcs/to-input-stream input-channel)))]
-      
-      (is (= (:status response) 201))
-      (is (= (type expected-file-contents) (type actual-filecontents)))
-      (is (= expected-file-contents actual-filecontents)))))
+      (is (= (:status response) 302))
+      (is (= (String. file-data) actual-filecontents)))))
