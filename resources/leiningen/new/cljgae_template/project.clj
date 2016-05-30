@@ -10,6 +10,7 @@
                  [ring-server "0.4.0"]
                  [ring/ring-defaults "0.2.0"]
                  [org.clojure/tools.logging "0.3.1"]
+                 [org.clojure/data.json "0.2.6"]
                  [ch.qos.logback/logback-classic "1.1.7"]
                  [com.google.guava/guava "19.0"]
                  [com.google.appengine/appengine-api-1.0-sdk ~appengine-version]

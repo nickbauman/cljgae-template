@@ -6,16 +6,19 @@
             [ring.middleware.multipart-params :as multipart-params]
             [ring.middleware.multipart-params.byte-array :as upload-store]
             [ring.util.response :as response]
+            [clojure.data.json :as json]
             [clojure.tools.logging :as log]
             [clj-time.core :as t]
             [clojure.java.io :as io]
             [{{name}}.env :as env]
             [{{name}}.gcs :as gcs]
-            ;[{{name}}.push-queue :as pq]
+            [{{name}}.push-queue :as pq]
             [{{name}}.db :as db]
             [{{name}}.env :as env]
             [{{name}}.model :as m]
-            [{{name}}.view :refer [home file-upload-form]]))
+            [{{name}}.view :refer [home file-upload-form]])
+  (:import [java.io InputStreamReader]))
+
 
 (defn init []
   (log/info "{{name}} is starting on" env/environment))
@@ -38,18 +41,38 @@
       (log/infof "Succesfully wrote %1$s to /%2$s/%1$s" filename env/gcs-bucket-name)
       (response/redirect "/save"))))
 
+(defn process-json-bg
+  "Takes a largeish JSON file and processes it in the background in parts via a push queue
+  - request: the ring request"
+  [request]
+  (let [data (json/read (InputStreamReader. (:body request)))]
+    (loop [[d & dd] data]
+      (pq/add-to-queue 
+       (pq/get-queue "default")
+       (apply pq/task-options "/save-json" 1000 (mapcat #(identity %) d)))
+      (if (not (seq dd))
+        {:status 202}
+        (recur dd)))))
+
+; TODO actually process the data
+(defn save-json
+  [request]
+  {:status 200})
+
 (defroutes app-routes
   (GET "/" [:as r] (home r))
   (GET "/save" [:as r] (file-upload-form r))
   (POST "/save" {params :params} (do-save params))
+  (POST "/process-json-bg" [:as r] (process-json-bg r))
+  (GET "/save-json" [:as r] (save-json r))
   (route/resources "/")
   (route/not-found "Page not found"))
 
 (defn wrap-middleware [routes]
   (let [modified-defaults 
         (-> site-defaults
-            (assoc :params {:multipart {:store (upload-store/byte-array-store)}})
-            (assoc :security {:anti-forgery false}))]
+            (assoc :params {:multipart {:store (upload-store/byte-array-store)}}) ; TODO use GCS directly instead of the byte array store
+            (assoc :security {:anti-forgery false}))] ; TODO AF might be desired, get it working with test harness
     (wrap-defaults routes modified-defaults)))
 
 (def app
