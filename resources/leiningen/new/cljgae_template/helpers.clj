@@ -1,5 +1,7 @@
 (ns {{name}}.test.helpers
-  (:require [clojure.java.io :as io]))
+    (:require [clojure.java.io :as io])
+    (:import [com.google.appengine.tools.development.testing LocalTaskQueueTestConfig]
+             [com.google.appengine.api.taskqueue.dev LocalTaskQueue]))
 
 (defn create-temp-file 
   [file-path]
@@ -20,3 +22,20 @@
         (recur (.read r) 
                (conj byte-vec (int c)))
         (byte-array byte-vec)))))
+
+
+(defn get-local-queue-infra []
+  (LocalTaskQueueTestConfig/getLocalTaskQueue))
+
+(defn flush-test-queue
+  [queue-name]
+  (.flushQueue (get-local-queue-infra) queue-name))
+
+(defn get-default-queue [task-queue]
+  (get (.getQueueStateInfo task-queue) "default"))
+
+(defn get-tasks [queue-state-info]
+  (->> queue-state-info
+       .getTaskInfo
+       (map bean)
+       (sort-by :task-name)))

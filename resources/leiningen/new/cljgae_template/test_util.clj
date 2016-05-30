@@ -10,3 +10,8 @@
 
     (is (= (try-with-default :default (throw (Exception. "Message: Exception thrown")))
            :default)))
+
+(deftest test-name?
+  (is (= "g" (name? :g)))
+  (is (= "g" (name? "g")))
+  (is (= 1 (name? 1))))
