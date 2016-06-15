@@ -9,8 +9,8 @@ A Leiningen template for creating useful and productive GAE apps in Clojure usin
 Creates a new appengine project on disk under dir <project name> that should run on the latest GAE. It has a few routes 
 with corresponding tests which show the usage of a few appengine APIs such as 
 
-* Google Cloud Storage (via file upload example)
-* The datastore (as above)
+* Google Cloud Storage (via file upload test example)
+* The datastore, including a Clojure DSL for querying the datastore (see `db.clj` test for examples)
 * The cloud project API (via "/" route) 
 * Asyncronous task queues / AKA appengine"push queues" (via a JSON request of a "large" list of data points)
 
@@ -18,11 +18,10 @@ With unit tests for each. All examples also run on the dev appserver.
 
 ## Future directions
 
+* Finish datastore query language, especially support for ancestor queries
 * More comprehensive examples of task queues
-* Complete Clojure idiomatic query-builder for Datastore example
 * More comprehensive use of cloud storage
 * Examples of other commonly used GAE apis
-* ???
 
 ## License
 

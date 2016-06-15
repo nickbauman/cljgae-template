@@ -1,12 +1,14 @@
 (ns {{name}}.test.db
-  (:require [clojure.test :refer :all]
-            [{{name}}.test.fixtures :as fixtures]
-            [{{name}}.db :as db :refer [defentity save! delete!]]
-            [clj-time.core :as t]))
+    (:require [clojure.test :refer :all]
+              [{{name}}.test.fixtures :as fixtures]
+              [{{name}}.db :as db :refer [defentity save! delete!]]
+              [clj-time.core :as t]))
 
 (use-fixtures :once fixtures/setup-local-service-test-helper)
 
 (defentity BasicEntity [content saved-time])
+
+(defentity AnotherEntity [content saved-time int-value])
 
 (defentity CustomKeyEntity [key content saved-time])
 
@@ -53,3 +55,24 @@
       (are [x y] (= x y)
         "Something Saved" (:content fetched-ent)
         saved-time (:saved-time fetched-ent)))))
+
+  (deftest test-query-language
+    (testing "query entity with predicates"
+      (let [entity (save! (create-AnotherEntity "Some content woo" (t/date-time 1980 3 5) 6))
+            entity2 (save! (create-AnotherEntity "Other content" (t/date-time 1984 10 12) 17))]
+                                        ; query all
+        (is (= (list entity entity2) (query-AnotherEntity [])))
+                                        ; equality
+        (is (= (list entity) (query-AnotherEntity [:content = "Some content woo"])))
+        (is (nil? (query-AnotherEntity [:content = "Blearg not found"])))
+                                        ; greater-than and less-than
+        (is (= (list entity) (query-AnotherEntity [:int-value < 7])))
+        (is (nil? (query-AnotherEntity [:int-value < 5])))
+                                        ; before and after
+        (is (= (list entity entity2) (query-AnotherEntity [:saved-time > (.toDate (t/date-time 1979 3 5))])))
+        (is (nil? (query-AnotherEntity [:saved-time < (.toDate (t/date-time 1979 3 5))])))
+                                        ; and queries
+        (is (= (list entity) (query-AnotherEntity [:and [:content = "Some content woo"] [:int-value > 5]])))
+                                        ; or queries
+        (is (= (list entity) (query-AnotherEntity [:or [:content = "Some content woo"] [:int-value < 5]]))))))
+  
