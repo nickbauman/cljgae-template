@@ -16,3 +16,7 @@
   (if (= clojure.lang.Keyword (type maybe-kw))
     (name maybe-kw)
     maybe-kw))
+
+(defn in [scalar sequence]
+  "Returns true if scalar value is found in sequence, otherwise returns nil"
+  (some #(= scalar %) sequence))
