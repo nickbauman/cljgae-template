@@ -11,7 +11,7 @@ with corresponding tests which show the usage of a few appengine APIs such as
 
 * Google Cloud Storage (via file upload test example)
 * The datastore, including a Clojure DSL for querying the datastore (see `db.clj` test for examples)
-* The cloud project API (via "/" route) 
+* The App Identity Service API (via "/" route) 
 * Asyncronous task queues / AKA appengine"push queues" (via a JSON request of a "large" list of data points)
 
 With unit tests for each. All examples also run on the dev appserver.

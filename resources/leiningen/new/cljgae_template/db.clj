@@ -104,56 +104,57 @@
                    <= Query$FilterOperator/LESS_THAN_OR_EQUAL
                    != Query$FilterOperator/NOT_EQUAL})
 
-(defn composite-predicate?
-  [predicates]
-  (or (= (ffirst predicates) :or) (= (ffirst predicates) :and)))
+(defn filter-map
+  [keyw jfilter-predicates]
+  (if (= :or keyw)
+    (Query$CompositeFilterOperator/or jfilter-predicates)
+    (Query$CompositeFilterOperator/and jfilter-predicates)))
 
-(defn keys-only?
-  [preds]
-  (if (composite-predicate? preds)
-    (keys-only? (second preds))
-    (some #(= :keys-only (first %)) preds)))
-
-(defn make-filter-predicate
+(defn make-property-filter
   [pred-coll]
-  (if (= (count pred-coll) 3)
-    (let [[property key-fn query-value] pred-coll
-          filter-operator (operator-map key-fn)]
-      (if filter-operator
-        (Query$FilterPredicate. (name property) filter-operator query-value)
-        (throw (RuntimeException. (str "operator " key-fn " not found in operator-map " (keys operator-map))))))
-    (if (not (and (= (count pred-coll) 1) (= (first pred-coll) :keys-only)))
-      (throw (RuntimeException. (str "cannot interpret " pred-coll))))))
+   (let [[property operator-fn query-value] pred-coll
+         filter-operator (operator-map operator-fn)]
+     (if filter-operator
+       (Query$FilterPredicate. (name property) filter-operator query-value)
+       (throw (RuntimeException. (str "operator " operator-fn " not found in operator-map " (keys operator-map)))))))
+
+(declare compose-query-filter)
+
+(defn compose-predicates
+  [preds-coll]
+  (loop [jfilter-preds []
+         preds preds-coll]
+    (if (seq preds)
+      (if (u/in (ffirst preds) [:or :and])
+        (recur (conj jfilter-preds (compose-query-filter (first preds)))
+               (rest preds))
+        (recur (conj jfilter-preds (make-property-filter (first preds)))
+               (rest preds)))
+      jfilter-preds)))
 
 (defn apply-filters-to-query
   [predicates ent-name filters]
-  (if (or (= (type filters) Query$CompositeFilter) (nil? filters))
-    (let [pred-filters (if (nil? filters) 
-                         (make-filter-predicate (first predicates))
-                         filters)]
-      (if (keys-only? predicates)
-        (.setFilters (.setKeysOnly (Query. ent-name)) pred-filters)
-        (.setFilter (Query. ent-name) pred-filters)))))
+  (let [pred-filters (if (nil? filters) 
+                       (make-property-filter predicates)
+                       filters)]
+    (.setFilter (Query. ent-name) pred-filters)))
+
+(defn compose-query-filter
+  [preds-vec]
+  (if (u/in (first preds-vec) [:and :or])
+    (let [composite-condition (first preds-vec)
+          jfilter-predicates (compose-predicates (rest preds-vec))]
+      (filter-map composite-condition jfilter-predicates))))
 
 (defn make-query
   [predicates ent-name]
-  (if (seq (first predicates))
-    (if (composite-predicate? predicates)
-      (let [composite-condition (ffirst predicates)
-            jfilter-predicates (loop [jfilter-preds []
-                                      preds (rest (first predicates))]
-                                 (if (seq preds)
-                                   (recur (conj jfilter-preds (make-filter-predicate (first preds)))
-                                          (rest preds))
-                                   jfilter-preds))
-            jcomp-filter (if (= composite-condition :or) 
-                           (Query$CompositeFilterOperator/or jfilter-predicates)
-                           (Query$CompositeFilterOperator/and jfilter-predicates))]
-            (apply-filters-to-query predicates ent-name jcomp-filter)) 
-        (apply-filters-to-query predicates ent-name nil))
+  (if (seq predicates)
+    (if-let [jcomp-filter (compose-query-filter predicates)]
+      (apply-filters-to-query predicates ent-name jcomp-filter) 
+      (apply-filters-to-query predicates ent-name nil))
     (Query. ent-name))) ; returns all entities!
 
-(defn run-query
+(defn query-entity
   [predicates ent-sym]
   (let [ds (DatastoreServiceFactory/getDatastoreService)
         ent-name (name ent-sym)
@@ -191,10 +192,12 @@
          (if-let [result# (get-entity '~sym key#)]
            (merge ~empty-ent result#)))
 
-       (defn ~(symbol (str 'query- name)) [& predicates#]
-         (let [results# (run-query predicates# '~sym)]
+       (defn ~(symbol (str 'query- name)) [& predicates-param#]
+         (let [predicates# (if (seq predicates-param#) (first predicates-param#) predicates-param#)
+               results# (query-entity predicates# '~sym)]
            (if results#
              (map #(merge ~empty-ent %) results#))))
        
        (defn ~(symbol (str 'delete- name)) [key#]
          (delete-entity '~sym key#)))))
+
