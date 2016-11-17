@@ -1,6 +1,6 @@
 (defproject cljgae-template/lein-template "0.1.0-SNAPSHOT"
-  :description "FIXME: write description"
-  :url "http://example.com/FIXME"
+  :description "CljGAE is a leiningen template for Google App Engine apps"
+  :url "https://github.com/nickbauman/cljgae-template"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :eval-in-leiningen true)
