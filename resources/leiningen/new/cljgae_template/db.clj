@@ -12,6 +12,7 @@
               FetchOptions$Builder
               KeyFactory
               Query
+              Query$SortDirection
               Query$CompositeFilter
               Query$CompositeFilterOperator
               Query$FilterPredicate
@@ -104,11 +105,34 @@
                    <= Query$FilterOperator/LESS_THAN_OR_EQUAL
                    != Query$FilterOperator/NOT_EQUAL})
 
+(def sort-order-map {:desc Query$SortDirection/DESCENDING
+                     :asc Query$SortDirection/ASCENDING
+                     nil Query$SortDirection/ASCENDING})
+
 (defn filter-map
   [keyw jfilter-predicates]
   (if (= :or keyw)
     (Query$CompositeFilterOperator/or jfilter-predicates)
     (Query$CompositeFilterOperator/and jfilter-predicates)))
+
+(defn get-option
+  [options option?]
+  (println (str "OPTIONS: " options " OPTION?: " option?))
+  (let [indexed-pairs (u/index-seq options)]
+    (if-let [[[index _]] (seq (filter #(= option? (second %)) indexed-pairs))]
+      (do
+        (println (str "INDEX: " index))
+        (get (vec options) (inc index))))))
+
+(defn apply-sort
+  [query options]
+  (if-let [order-prop (get-option options :order-by)]
+    (.addSort query (name order-prop) (get sort-order-map (get-option options order-prop)))
+    query))
+
+(defn keys-only?
+  [options]
+  (get-option options :keys-only))
 
 (defn make-property-filter
   [pred-coll]
@@ -133,42 +157,40 @@
       jfilter-preds)))
 
 (defn apply-filters-to-query
-  [predicates ent-name filters]
-  (let [pred-filters (if (nil? filters) 
-                       (make-property-filter predicates)
-                       filters)]
-    (.setFilter (Query. ent-name) pred-filters)))
+  [predicates options ent-name filters]
+  (let [pred-filters (if (nil? filters) (make-property-filter predicates) filters)
+        query (.setFilter (Query. ent-name) pred-filters)
+        query (if (keys-only? options) (.setKeysOnly query) query)]
+    (apply-sort query options)))
 
 (defn compose-query-filter
   [preds-vec]
   (if (u/in (first preds-vec) [:and :or])
-    (let [composite-condition (first preds-vec)
+    (let [condition (first preds-vec)
           jfilter-predicates (compose-predicates (rest preds-vec))]
-      (filter-map composite-condition jfilter-predicates))))
+      (filter-map condition jfilter-predicates))))
 
 (defn make-query
-  [predicates ent-name]
+  [predicates options ent-name]
   (if (seq predicates)
     (if-let [jcomp-filter (compose-query-filter predicates)]
-      (apply-filters-to-query predicates ent-name jcomp-filter) 
-      (apply-filters-to-query predicates ent-name nil))
-    (Query. ent-name))) ; returns all entities!
+      (apply-filters-to-query predicates options ent-name jcomp-filter) 
+      (apply-filters-to-query predicates options ent-name nil))
+    ; caution: returns all!
+    (let [q (Query. ent-name)
+          q (if (keys-only? options) (.setKeysOnly q) q)]
+      (apply-sort q options))))
 
 (defn query-entity
-  [predicates ent-sym]
+  [predicates options ent-sym]
   (let [ds (DatastoreServiceFactory/getDatastoreService)
         ent-name (name ent-sym)
-        query (make-query predicates ent-name)
+        query (make-query predicates options ent-name)
         prepared-query (.prepare ds query)
         result-jlist (.asList prepared-query (FetchOptions$Builder/withDefaults))
         result-entities (map #(gae-entity->map %) result-jlist)]
     (if (seq result-entities)
-      (do
-        (log/debugf "Querying %s%s found %s" ent-name (first predicates) (pr-str result-entities))
-        result-entities)
-      (do
-        (log/debugf "Querying %s found nil" ent-name (first predicates))
-         nil))))
+      result-entities)))
 
 (defmacro defentity
   [entity-name entity-fields]
@@ -192,10 +214,10 @@
          (if-let [result# (get-entity '~sym key#)]
            (merge ~empty-ent result#)))
 
-       (defn ~(symbol (str 'query- name)) [& predicates-param#]
-         (let [predicates# (if (seq predicates-param#) (first predicates-param#) predicates-param#)
-               results# (query-entity predicates# '~sym)]
-           (if results#
+       (defn ~(symbol (str 'query- name)) [predicates# & options#]
+         (if-let [results# (query-entity predicates# (first options#) '~sym)]
+           (if (keys-only? (first options#))
+             (map :key results#)
              (map #(merge ~empty-ent %) results#))))
        
        (defn ~(symbol (str 'delete- name)) [key#]
