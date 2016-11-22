@@ -81,11 +81,13 @@
       (is (= (list entity) (query-AnotherEntity [:or [:content = "Some content woo"] [:int-value < 5]])))
       (is (= (list entity entity2) (query-AnotherEntity [:or [:content = "Some content woo"] [:int-value > 5]])))
                                         ; compound queries with nested compound predicates
-      (is (= (list entity entity2) (query-AnotherEntity [:or [:content = "Other content"] [:and [:saved-time < (.toDate (t/date-time 1983 3 5))] [:int-value = 6]]])))
+      (is (= (list entity entity2) (query-AnotherEntity [:or [:content = "Other content"] 
+                                                         [:and [:saved-time < (.toDate (t/date-time 1983 3 5))] [:int-value = 6]]])))
                                         ; keys-only support
       (is (= (list (:key entity)) (query-AnotherEntity  [:int-value < 7] [:keys-only true])))
                                         ; order-by support
       (is (= (list entity2 entity) (query-AnotherEntity  [:or [:content = "Some content woo"] [:int-value > 5]] [:order-by :int-value :desc])))
                                         ; keys only and order-by support
-      (is (= (list (:key entity2) (:key entity)) (query-AnotherEntity  [:saved-time > (.toDate (t/date-time 1979 3 5))] [:keys-only true :order-by :saved-time :desc]))))))
+      (is (= (list (:key entity2) (:key entity)) (query-AnotherEntity  [:saved-time > (.toDate (t/date-time 1979 3 5))] 
+                                                                       [:keys-only true :order-by :saved-time :desc]))))))
 
