@@ -117,12 +117,9 @@
 
 (defn get-option
   [options option?]
-  (println (str "OPTIONS: " options " OPTION?: " option?))
   (let [indexed-pairs (u/index-seq options)]
-    (if-let [[[index _]] (seq (filter #(= option? (second %)) indexed-pairs))]
-      (do
-        (println (str "INDEX: " index))
-        (get (vec options) (inc index))))))
+    (if-let [[[index _]] (seq (filter #(= option? (second %)) indexed-pairs))]   
+      (get (vec options) (inc index)))))
 
 (defn apply-sort
   [query options]
@@ -181,14 +178,21 @@
           q (if (keys-only? options) (.setKeysOnly q) q)]
       (apply-sort q options))))
 
+(defn query-iter-to-lazy-seq
+  ([pq-iterable]
+   (query-iter-to-lazy-seq pq-iterable (.iterator pq-iterable)))
+  ([pq-iterable i]
+   (lazy-seq 
+    (when (.hasNext i)
+      (cons (gae-entity->map (.next i)) (query-iter-to-lazy-seq pq-iterable i))))))
+
 (defn query-entity
   [predicates options ent-sym]
   (let [ds (DatastoreServiceFactory/getDatastoreService)
         ent-name (name ent-sym)
         query (make-query predicates options ent-name)
         prepared-query (.prepare ds query)
-        result-jlist (.asList prepared-query (FetchOptions$Builder/withDefaults))
-        result-entities (map #(gae-entity->map %) result-jlist)]
+        result-entities (query-iter-to-lazy-seq (.asIterable prepared-query))]
     (if (seq result-entities)
       result-entities)))
 

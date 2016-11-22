@@ -23,7 +23,7 @@ With unit tests for each. All examples also run on the dev appserver.
 ## Datastore query language
 
 A Clojure DSL has been developed inspired by the Python NDB library (with an 
-emphasis on Clojure's more functional idiom.)
+emphasis on Clojure's more functional idiom.) Queries return a lazy sequence.
 
 ### Examples
 
