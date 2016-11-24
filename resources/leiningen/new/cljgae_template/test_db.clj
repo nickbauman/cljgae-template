@@ -59,35 +59,40 @@
 (deftest test-query-language
   (testing "query entity with predicates"
     (let [entity (save! (create-AnotherEntity "Some content woo" (t/date-time 1980 3 5) 6))
-          entity2 (save! (create-AnotherEntity "Other content" (t/date-time 1984 10 12) 17))]
+          entity2 (save! (create-AnotherEntity "Other content" (t/date-time 1984 10 12) 91))
+          entity3 (save! (create-AnotherEntity "More interesting content" (t/date-time 1984 10 12) 17))]
                                         ; query all
-      (is (= (list entity entity2) (query-AnotherEntity [])))
+      (is (= (list entity entity2 entity3) (query-AnotherEntity [])))
                                         ; equality
       (is (= (list entity) (query-AnotherEntity [:content = "Some content woo"])))
       (is (nil? (query-AnotherEntity [:content = "Blearg not found"])))
                                         ; not equal
-      (is (= (list entity2 entity) (query-AnotherEntity [:content != "Not found"])))
-      (is (= (list entity) (query-AnotherEntity [:content != "Other content"])))
+      (is (= (list entity3 entity2 entity) (query-AnotherEntity [:content != "Not found"])))
+      (is (= (list entity3 entity) (query-AnotherEntity [:content != "Other content"])))
                                         ; greater-than and less-than
       (is (= (list entity) (query-AnotherEntity [:int-value < 7])))
       (is (nil? (query-AnotherEntity [:int-value < 5])))
                                         ; time: before and after
-      (is (= (list entity entity2) (query-AnotherEntity [:saved-time > (.toDate (t/date-time 1979 3 5))])))
+      (is (= (list entity entity2 entity3) (query-AnotherEntity [:saved-time > (.toDate (t/date-time 1979 3 5))])))
       (is (nil? (query-AnotherEntity [:saved-time < (.toDate (t/date-time 1979 3 5))])))
                                         ; "and" compound queries
       (is (= (list entity) (query-AnotherEntity [:and [:content = "Some content woo"] [:int-value > 5]])))
-      (is (= (list entity entity2) (query-AnotherEntity [:and [:int-value > 5] [:int-value <= 17]])))
+      (is (= (list entity entity3) (query-AnotherEntity [:and [:int-value > 5] [:int-value <= 17]])))
                                         ; "or" compound queries
       (is (= (list entity) (query-AnotherEntity [:or [:content = "Some content woo"] [:int-value < 5]])))
-      (is (= (list entity entity2) (query-AnotherEntity [:or [:content = "Some content woo"] [:int-value > 5]])))
+      (is (= (list entity entity3 entity2) (query-AnotherEntity [:or [:content = "Some content woo"] [:int-value > 5]])))
                                         ; compound queries with nested compound predicates
-      (is (= (list entity entity2) (query-AnotherEntity [:or [:content = "Other content"] 
-                                                         [:and [:saved-time < (.toDate (t/date-time 1983 3 5))] [:int-value = 6]]])))
+      (is (= (list entity entity2) (query-AnotherEntity 
+                                    [:or [:content = "Other content"] 
+                                     [:and [:saved-time < (.toDate (t/date-time 1983 3 5))] [:int-value = 6]]])))
                                         ; keys-only support
-      (is (= (list (:key entity)) (query-AnotherEntity  [:int-value < 7] [:keys-only true])))
+      (is (= (list (:key entity)) (query-AnotherEntity [:int-value < 7] [:keys-only true])))
                                         ; order-by support
-      (is (= (list entity2 entity) (query-AnotherEntity  [:or [:content = "Some content woo"] [:int-value > 5]] [:order-by :int-value :desc])))
-                                        ; keys only and order-by support
-      (is (= (list (:key entity2) (:key entity)) (query-AnotherEntity  [:saved-time > (.toDate (t/date-time 1979 3 5))] 
-                                                                       [:keys-only true :order-by :saved-time :desc]))))))
+      (is (= (list entity2 entity3 entity) (query-AnotherEntity [:int-value > 0] [:order-by :int-value :desc])))
+                                        ; keys only and order-by support together
+      (is (= (list (:key entity2) (:key entity3) (:key entity)) (query-AnotherEntity  [:int-value > 0] 
+                                                                       [:keys-only true :order-by :int-value :desc])))
+                                        ; support multiple sort orders (with keys-only, too)
+      (is (= (list (:key entity3) (:key entity2) (:key entity)) (query-AnotherEntity [:saved-time > 0] 
+                                                                                     [:order-by :saved-time :desc :int-value :asc :keys-only true]))))))
 
