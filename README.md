@@ -58,7 +58,7 @@ emphasis on Clojure's more functional idiom.) Queries return a lazy sequence.
 
 ## Future directions
 
-* Finish datastore query language, especially support for ancestor queries
+* Add support for projections and ancestor queries
 * More comprehensive examples of task queues
 * More comprehensive use of cloud storage
 * Examples of other commonly used GAE apis
