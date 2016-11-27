@@ -117,14 +117,17 @@
 
 (defn get-option
   [options option?]
-  (let [indexed-pairs (u/index-seq options)]
+  (let [indexed-pairs (map-indexed vector options)]
     (if-let [[[index _]] (seq (filter #(= option? (second %)) indexed-pairs))]   
       (get (vec options) (inc index)))))
 
-(defn apply-sort
+(defn add-sorts
   [query options]
-  (if-let [order-prop (get-option options :order-by)]
-    (.addSort query (name order-prop) (get sort-order-map (get-option options order-prop)))
+  (if-let [ordering (if (and (seq options) (not (= -1 (.indexOf options :order-by)))) (rest (subvec options (.indexOf options :order-by))))]
+    (loop [[[order-prop direction] & more] (partition 2 ordering)]
+      (if (and order-prop direction (not (= order-prop :keys-only)))
+        (do (.addSort query (name order-prop) (get sort-order-map direction)) (recur more))
+        query))
     query))
 
 (defn keys-only?
@@ -146,19 +149,12 @@
   (loop [jfilter-preds []
          preds preds-coll]
     (if (seq preds)
-      (if (u/in (ffirst preds) [:or :and])
-        (recur (conj jfilter-preds (compose-query-filter (first preds)))
-               (rest preds))
-        (recur (conj jfilter-preds (make-property-filter (first preds)))
+      (let [filter-fn (if (u/in (ffirst preds) [:or :and]) 
+                        compose-query-filter 
+                        make-property-filter)]
+        (recur (conj jfilter-preds (filter-fn (first preds)))
                (rest preds)))
       jfilter-preds)))
-
-(defn apply-filters-to-query
-  [predicates options ent-name filters]
-  (let [pred-filters (if (nil? filters) (make-property-filter predicates) filters)
-        query (.setFilter (Query. ent-name) pred-filters)
-        query (if (keys-only? options) (.setKeysOnly query) query)]
-    (apply-sort query options)))
 
 (defn compose-query-filter
   [preds-vec]
@@ -167,16 +163,21 @@
           jfilter-predicates (compose-predicates (rest preds-vec))]
       (filter-map condition jfilter-predicates))))
 
+(defn qbuild
+  [predicates options ent-name filters]
+  (let [pred-filters (if (nil? filters) (make-property-filter predicates) filters)
+        query (.setFilter (Query. ent-name) pred-filters)
+        query (if (keys-only? options) (.setKeysOnly query) query)]
+    (add-sorts query options)))
+
 (defn make-query
   [predicates options ent-name]
   (if (seq predicates)
-    (if-let [jcomp-filter (compose-query-filter predicates)]
-      (apply-filters-to-query predicates options ent-name jcomp-filter) 
-      (apply-filters-to-query predicates options ent-name nil))
+    (qbuild predicates options ent-name (compose-query-filter predicates)) 
     ; caution: returns all!
     (let [q (Query. ent-name)
           q (if (keys-only? options) (.setKeysOnly q) q)]
-      (apply-sort q options))))
+      (add-sorts q options))))
 
 (defn query-iter-to-lazy-seq
   ([pq-iterable]
