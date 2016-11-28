@@ -1,4 +1,4 @@
-(defproject cljgae-template/lein-template "0.1.0-SNAPSHOT"
+(defproject cljgae-template/lein-template "0.2.0-SNAPSHOT"
   :description "CljGAE is a leiningen template for Google App Engine apps"
   :url "https://github.com/nickbauman/cljgae-template"
   :license {:name "Eclipse Public License"
