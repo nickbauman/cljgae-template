@@ -55,7 +55,7 @@
       (are [x y] (= x y)
         "Something Saved" (:content fetched-ent)
         saved-time (:saved-time fetched-ent)))))
-  
+
 (deftest test-query-language
   (testing "query entity with predicates"
     (let [entity (save! (create-AnotherEntity "Some content woo" (t/date-time 1980 3 5) 6))
@@ -90,9 +90,8 @@
                                         ; order-by support
       (is (= (list entity2 entity3 entity) (query-AnotherEntity [:int-value > 0] [:order-by :int-value :desc])))
                                         ; keys only and order-by support together
-      (is (= (list (:key entity2) (:key entity3) (:key entity)) (query-AnotherEntity  [:int-value > 0] 
-                                                                       [:keys-only true :order-by :int-value :desc])))
+      (is (= (list (:key entity2) (:key entity3) (:key entity)) 
+             (query-AnotherEntity [:int-value > 0] [:keys-only true :order-by :int-value :desc])))
                                         ; support multiple sort orders (with keys-only, too)
-      (is (= (list (:key entity3) (:key entity2) (:key entity)) (query-AnotherEntity [:saved-time > 0] 
-                                                                                     [:order-by :saved-time :desc :int-value :asc :keys-only true]))))))
-
+      (is (= (list (:key entity3) (:key entity2) (:key entity)) 
+             (query-AnotherEntity [:saved-time > 0] [:order-by :saved-time :desc :int-value :asc :keys-only true]))))))
