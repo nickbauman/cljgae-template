@@ -5,5 +5,7 @@ All notable changes to this project will be documented in this file. This change
 ### Added
 - Basic template works with GCS (file uploads), App Identity Service, Task Queues and Datastore
 
-[0.1.0]: https://github.com/nickbauman/cljgae-template/compare/0.1.0...HEAD
+	
+[0.2.0-SNAPSHOT]: https://github.com/nickbauman/cljgae-template/compare/0.2.0-SNAPSHOT...0.1.0-SNAPSHOT
+[0.1.0-SNAPSHOT]: https://github.com/nickbauman/cljgae-template/compare/0.1.0-SNAPSHOT...HEAD
 
