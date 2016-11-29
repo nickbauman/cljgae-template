@@ -122,7 +122,7 @@
       (get (vec options) (inc index)))))
 
 (defn add-sorts
-  [query options]
+  [options query]
   (if-let [ordering (if (and (seq options) (not (= -1 (.indexOf options :order-by)))) (rest (subvec options (.indexOf options :order-by))))]
     (loop [[[order-prop direction] & more] (partition 2 ordering)]
       (if (and order-prop direction (not (= order-prop :keys-only)))
@@ -130,9 +130,11 @@
         query))
     query))
 
-(defn keys-only?
-  [options]
-  (get-option options :keys-only))
+(defn set-keys-only
+  [options query]
+  (if (get-option options :keys-only)
+    (.setKeysOnly query)
+    query))
 
 (defn make-property-filter
   [pred-coll]
@@ -165,19 +167,19 @@
 
 (defn qbuild
   [predicates options ent-name filters]
-  (let [pred-filters (if (nil? filters) (make-property-filter predicates) filters)
-        query (.setFilter (Query. ent-name) pred-filters)
-        query (if (keys-only? options) (.setKeysOnly query) query)]
-    (add-sorts query options)))
+  (->> (if (nil? filters) (make-property-filter predicates) filters)
+       (.setFilter (Query. ent-name))
+       (set-keys-only options)
+       (add-sorts options)))
 
 (defn make-query
   [predicates options ent-name]
   (if (seq predicates)
     (qbuild predicates options ent-name (compose-query-filter predicates)) 
     ; caution: returns all!
-    (let [q (Query. ent-name)
-          q (if (keys-only? options) (.setKeysOnly q) q)]
-      (add-sorts q options))))
+    (->> (Query. ent-name)
+         (set-keys-only options)
+         (add-sorts options))))
 
 (defn query-iter-to-lazy-seq
   ([pq-iterable]
@@ -189,13 +191,12 @@
 
 (defn query-entity
   [predicates options ent-sym]
-  (let [ds (DatastoreServiceFactory/getDatastoreService)
-        ent-name (name ent-sym)
-        query (make-query predicates options ent-name)
-        prepared-query (.prepare ds query)
-        result-entities (query-iter-to-lazy-seq (.asIterable prepared-query))]
-    (if (seq result-entities)
-      result-entities)))
+  (->> (name ent-sym) 
+       (make-query predicates options)
+       (.prepare (DatastoreServiceFactory/getDatastoreService))
+       .asIterable
+       query-iter-to-lazy-seq
+       seq))
 
 (defmacro defentity
   [entity-name entity-fields]
@@ -221,10 +222,9 @@
 
        (defn ~(symbol (str 'query- name)) [predicates# & options#]
          (if-let [results# (query-entity predicates# (first options#) '~sym)]
-           (if (keys-only? (first options#))
+           (if (get-option (first options#) :keys-only)
              (map :key results#)
              (map #(merge ~empty-ent %) results#))))
        
        (defn ~(symbol (str 'delete- name)) [key#]
          (delete-entity '~sym key#)))))
-
