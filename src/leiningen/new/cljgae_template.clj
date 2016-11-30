@@ -34,6 +34,7 @@
              ["test/{{sanitized}}/test/push_queue.clj" (render "test_push_queue.clj" data)]
              ["test/{{sanitized}}/test/util.clj" (render "test_util.clj" data)]
              ; WEB-INF
+             ["war-resources/WEB-INF/datastore-indexes.xml" (render "datastore-indexes.xml" data)]
              ["war-resources/WEB-INF/appengine-web.xml" (render "appengine-web.xml" data)]
              ["war-resources/WEB-INF/cron.xml" (render "cron.xml" data)]
              ["war-resources/WEB-INF/logging.properties" (render "logging.properties" data)]

@@ -1,7 +1,7 @@
 (ns {{name}}.test.db
     (:require [clojure.test :refer :all]
               [{{name}}.test.fixtures :as fixtures]
-              [{{name}}.db :as db :refer [defentity save! delete! !=]]
+              [{{name}}.db :as db :refer [defentity gae-key save! delete! !=]]
               [clj-time.core :as t]))
 
 (use-fixtures :once fixtures/setup-local-service-test-helper)
@@ -57,14 +57,15 @@
         saved-time (:saved-time fetched-ent)))))
 
 (deftest test-query-language
-  (testing "query entity with predicates"
-    (let [entity (save! (create-AnotherEntity "Some content woo" (t/date-time 1980 3 5) 6))
-          entity2 (save! (create-AnotherEntity "Other content" (t/date-time 1984 10 12) 91))
-          entity3 (save! (create-AnotherEntity "More interesting content" (t/date-time 1984 10 12) 17))]
+  (let [entity (save! (create-AnotherEntity "Some content woo" (t/date-time 1980 3 5) 6))
+        entity2 (save! (create-AnotherEntity "Other content" (t/date-time 1984 10 12) 91))
+        entity3 (save! (create-AnotherEntity "More interesting content" (t/date-time 1984 10 12) 17))]
+    
+    (testing "queries with predicates"
                                         ; query all
       (is (= (list entity entity2 entity3) (query-AnotherEntity [])))
                                         ; equality
-      (is (= (list entity) (query-AnotherEntity [:content = "Some content woo"])))
+            (is (= (list entity) (query-AnotherEntity [:content = "Some content woo"])))
       (is (nil? (query-AnotherEntity [:content = "Blearg not found"])))
                                         ; not equal
       (is (= (list entity3 entity2 entity) (query-AnotherEntity [:content != "Not found"])))
@@ -84,7 +85,9 @@
                                         ; compound queries with nested compound predicates
       (is (= (list entity entity2) (query-AnotherEntity 
                                     [:or [:content = "Other content"] 
-                                     [:and [:saved-time < (.toDate (t/date-time 1983 3 5))] [:int-value = 6]]])))
+                                     [:and [:saved-time < (.toDate (t/date-time 1983 3 5))] [:int-value = 6]]]))))
+    
+    (testing "query keys-only and order-by support"
                                         ; keys-only support
       (is (= (list (:key entity)) (query-AnotherEntity [:int-value < 7] [:keys-only true])))
                                         ; order-by support
@@ -94,4 +97,18 @@
              (query-AnotherEntity [:int-value > 0] [:keys-only true :order-by :int-value :desc])))
                                         ; support multiple sort orders (with keys-only, too)
       (is (= (list (:key entity3) (:key entity2) (:key entity)) 
-             (query-AnotherEntity [:saved-time > 0] [:order-by :saved-time :desc :int-value :asc :keys-only true]))))))
+             (query-AnotherEntity [:saved-time > 0] [:order-by :saved-time :desc :int-value :asc :keys-only true]))))
+    
+    (testing "querys with ancestors"
+      (let [root-entity (save! (create-BasicEntity "basic entity content" (t/date-time 2015 6 8)))
+            child-entity1 (save! (create-AnotherEntity "child one content" (t/date-time 2016 12 10) 33) (gae-key root-entity))
+            child-entity2 (save! (create-AnotherEntity "child two content" (t/date-time 2016 12 10) 44) (gae-key root-entity))]
+                                        ; parents can find their children
+        (is (= (list child-entity1 child-entity2) (query-AnotherEntity [] [:ancestor-key (gae-key root-entity)]))) 
+                                        ; works with predicates
+        (is (= (list child-entity2) (query-AnotherEntity [:int-value > 33] [:ancestor-key (gae-key root-entity)])))
+                                        ; works with keys-only support
+        (is (= (list (:key child-entity1) (:key child-entity2)) (query-AnotherEntity [] [:keys-only true :ancestor-key (gae-key root-entity)])))
+        (is (= (list (:key child-entity1) (:key child-entity2)) (query-AnotherEntity [] [:ancestor-key (gae-key root-entity) :keys-only true])))
+                                        ; works with order-by
+        (is (= (list child-entity2 child-entity1) (query-AnotherEntity [] [:ancestor-key (gae-key root-entity) :order-by :int-value :desc])))))))
