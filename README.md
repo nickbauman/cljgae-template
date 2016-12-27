@@ -66,7 +66,7 @@ emphasis on Clojure's more functional idiom.) Queries return a lazy sequence.
 
 ## Future directions
 
-* Add support for transactions, projections and ancestor queries
+* Add support for transactions and projections
 * More comprehensive examples of task queues
 * More comprehensive use of cloud storage
 * Examples of other commonly used GAE apis
