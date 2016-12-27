@@ -36,6 +36,10 @@ emphasis on Clojure's more functional idiom.) Queries return a lazy sequence.
 ### Examples
 
 ```clojure
+(defentity BasicEntity [content saved-time])
+
+(defentity AnotherEntity [content saved-time int-value])
+
 (let [entity (save! (create-AnotherEntity "Some content woo" (t/date-time 1980 3 5) 6))
       entity2 (save! (create-AnotherEntity "Other content" (t/date-time 1984 10 12) 91))
       entity3 (save! (create-AnotherEntity "More interesting content" (t/date-time 1984 10 12) 17))
