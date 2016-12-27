@@ -235,7 +235,7 @@
        (.prepare (DatastoreServiceFactory/getDatastoreService))
        .asIterable
        lazify-qiterable
-       seq)) ; TODO this is probably not needed
+       seq))
                                         ; End DS Query support ;;;
 (defmacro defentity
   [entity-name entity-fields]
