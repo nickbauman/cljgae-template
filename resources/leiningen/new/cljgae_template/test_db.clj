@@ -112,3 +112,4 @@
         (is (= (list (:key child-entity1) (:key child-entity2)) (query-AnotherEntity [] [:ancestor-key (gae-key root-entity) :keys-only true])))
                                         ; works with order-by
         (is (= (list child-entity2 child-entity1) (query-AnotherEntity [] [:ancestor-key (gae-key root-entity) :order-by :int-value :desc])))))))
+
