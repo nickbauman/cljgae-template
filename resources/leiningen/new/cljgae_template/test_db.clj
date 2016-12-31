@@ -1,7 +1,7 @@
 (ns {{name}}.test.db
     (:require [clojure.test :refer :all]
               [{{name}}.test.fixtures :as fixtures]
-              [{{name}}.db :as db :refer [defentity gae-key save! delete! !=]]
+              [{{name}}.db :as db :refer [defentity with-transaction gae-key save! delete! !=]]
               [clj-time.core :as t]))
 
 (use-fixtures :once fixtures/setup-local-service-test-helper)
@@ -111,5 +111,13 @@
         (is (= (list (:key child-entity1) (:key child-entity2)) (query-AnotherEntity [] [:keys-only true :ancestor-key (gae-key root-entity)])))
         (is (= (list (:key child-entity1) (:key child-entity2)) (query-AnotherEntity [] [:ancestor-key (gae-key root-entity) :keys-only true])))
                                         ; works with order-by
-        (is (= (list child-entity2 child-entity1) (query-AnotherEntity [] [:ancestor-key (gae-key root-entity) :order-by :int-value :desc])))))))
+        (is (= (list child-entity2 child-entity1) (query-AnotherEntity [] [:ancestor-key (gae-key root-entity) :order-by :int-value :desc]))))))
+
+  (testing "save with transactions"
+    (is (= 0 (count (query-AnotherEntity [:int-value > 200]))))
+    (with-transaction
+      (save! (create-AnotherEntity "Some Content" (t/date-time 2016 12 10) 201))
+      (save! (create-AnotherEntity "More Content" (t/date-time 2016 12 10) 202))
+      (save! (create-AnotherEntity "Even more content" (t/date-time 2016 12 10) 203)))
+    (is (= 3 (count (query-AnotherEntity [:int-value > 33]))))))
 

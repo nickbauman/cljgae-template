@@ -86,11 +86,15 @@ emphasis on Clojure's more functional idiom.) Queries return a lazy sequence.
   (query-AnotherEntity [] [:ancestor-key (gae-key root-entity) :keys-only true])
                                         ; ancestors that work with order-by
   (query-AnotherEntity [] [:ancestor-key (gae-key root-entity) :order-by :int-value :desc]))
+                                        ; transactions
+  (with-transaction
+     (save! (create-AnotherEntity "Content information" (t/date-time 1984 10 12) 201))
+     (save! (create-AnotherEntity "More content information" (t/date-time 1984 10 12) 201)))
 ```
 
 ## Future directions
 
-* Add support for transactions and projections
+* Add support for projections
 * More comprehensive examples of task queues
 * More comprehensive use of cloud storage
 * Examples of other commonly used GAE apis

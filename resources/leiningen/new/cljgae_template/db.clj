@@ -236,6 +236,17 @@
        .asIterable
        lazify-qiterable
        seq))
+
+(defmacro with-transaction [& body]
+  `(let [tx# (.beginTransaction (DatastoreServiceFactory/getDatastoreService))]
+     (try
+       (let [body-result# (do ~@body)]
+         (.commit tx#)
+         body-result#)
+       (catch Throwable err#
+         (do (.rollback tx#)
+             (throw err#))))))
+
                                         ; End DS Query support ;;;
 (defmacro defentity
   [entity-name entity-fields]
