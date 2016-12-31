@@ -1,7 +1,7 @@
 (ns {{name}}.test.db
     (:require [clojure.test :refer :all]
               [{{name}}.test.fixtures :as fixtures]
-              [{{name}}.db :as db :refer [defentity with-transaction gae-key save! delete! !=]]
+              [{{name}}.db :as db :refer [defentity with-transaction with-xg-transaction gae-key save! delete! !=]]
               [clj-time.core :as t]))
 
 (use-fixtures :once fixtures/setup-local-service-test-helper)
@@ -114,10 +114,25 @@
         (is (= (list child-entity2 child-entity1) (query-AnotherEntity [] [:ancestor-key (gae-key root-entity) :order-by :int-value :desc]))))))
 
   (testing "save with transactions"
-    (is (= 0 (count (query-AnotherEntity [:int-value > 200]))))
+    (is (= 0 (count (query-AnotherEntity [:int-value = 50]))))
     (with-transaction
-      (save! (create-AnotherEntity "Some Content" (t/date-time 2016 12 10) 201))
-      (save! (create-AnotherEntity "More Content" (t/date-time 2016 12 10) 202))
-      (save! (create-AnotherEntity "Even more content" (t/date-time 2016 12 10) 203)))
-    (is (= 3 (count (query-AnotherEntity [:int-value > 33]))))))
+      (save! (create-AnotherEntity "single entity content"  (t/date-time 2016 12 10) 50)))
+    (is (= 1 (count (query-AnotherEntity [:int-value = 50])))) 
+    
+    (is (= 0 (count (query-AnotherEntity [:int-value > 21000]))))
+                                        ; fails because this is an XG transaction: all entities are their own roots
+    (is (thrown-with-msg? 
+         IllegalArgumentException #"cross-group transaction need to be explicitly specified, see TransactionOptions.Builder.withXG"
+         (with-transaction
+           (save! (create-AnotherEntity "Some Content" (t/date-time 2016 12 10) 21001))
+           (save! (create-AnotherEntity "More Content" (t/date-time 2016 12 10) 21002))
+           (save! (create-AnotherEntity "Even more content" (t/date-time 2016 12 10) 21003)))))
+    (is (= 0 (count (query-AnotherEntity [:int-value > 21000]))))
+    
+    (is (= 0 (count (query-AnotherEntity [:int-value > 51000]))))
+    (with-xg-transaction
+      (save! (create-AnotherEntity "Some New Content" (t/date-time 2016 12 10) 51001))
+      (save! (create-AnotherEntity "More New Content" (t/date-time 2016 12 10) 51002))
+      (save! (create-AnotherEntity "Even More New Content" (t/date-time 2016 12 10) 51003)))   
+    (is (= 3 (count (query-AnotherEntity [:int-value > 51000]))))))
 

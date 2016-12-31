@@ -17,7 +17,8 @@
               Query$CompositeFilter
               Query$CompositeFilterOperator
               Query$FilterPredicate
-              Query$FilterOperator]))
+              Query$FilterOperator
+              TransactionOptions$Builder]))
 
 (defprotocol NdbEntity
   (save! [this] [this parent-key] "Saves the entity. Saves the entity with its parent key.")
@@ -91,7 +92,8 @@
       (try 
         (.put datastore gae-ent)
         (catch Exception e
-          (log/errorf "Unable to save %s" (pr-str entity)) e))
+          (log/error e (str "Unable to save " (pr-str entity)))
+          (throw e)))
       (if (:key entity)
         entity
         (assoc entity :key (.. gae-ent getKey getId))))))
@@ -237,15 +239,25 @@
        lazify-qiterable
        seq))
 
-(defmacro with-transaction [& body]
+(defmacro ds-operation-in-transaction
+  [tx & body]
+  `(try
+    (let [body-result# (do ~@body)]
+      (.commit ~tx)
+      body-result#)
+    (catch Throwable err#
+      (do (.rollback ~tx)
+          (throw err#)))))
+
+(defmacro with-xg-transaction 
+  [& body]
+  `(let [tx# (.beginTransaction (DatastoreServiceFactory/getDatastoreService) (TransactionOptions$Builder/withXG true))]
+     (ds-operation-in-transaction tx# ~@body)))
+
+(defmacro with-transaction 
+  [& body]
   `(let [tx# (.beginTransaction (DatastoreServiceFactory/getDatastoreService))]
-     (try
-       (let [body-result# (do ~@body)]
-         (.commit tx#)
-         body-result#)
-       (catch Throwable err#
-         (do (.rollback tx#)
-             (throw err#))))))
+     (ds-operation-in-transaction tx# ~@body)))
 
                                         ; End DS Query support ;;;
 (defmacro defentity
