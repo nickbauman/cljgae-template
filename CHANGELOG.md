@@ -2,7 +2,11 @@
 
 All notable changes to this project will be documented in this file. This change log follows the conventions of [keepachangelog.com](http://keepachangelog.com/).
 
-**Version 0.2.3-SNAPSHOT: current**
+**Version 0.2.4-SNAPSHOT: current**
+
+## [0.2.4-SNAPSHOT]
+### Support for datastore cross-group transactions, upgrade project dependencies, use latest version of app engine.
+[0.2.3-SNAPSHOT](https://github.com/nickbauman/cljgae-template/compare/0.2.3-SNAPSHOT...0.2.4-SNAPSHOT)
 
 ## [0.2.3-SNAPSHOT]
 ### Support for datastore transactions
