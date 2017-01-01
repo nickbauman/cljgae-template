@@ -3,12 +3,12 @@
 A Leiningen template for creating useful and productive GAE apps in Clojure 
 using the GAE Java SDK.
 
-## Release 0.2.3-SNAPSHOT
+## Release 0.2.4-SNAPSHOT
 
 Leiningen Clojars dependency:
 
 ```clojure
-[org.clojars.nicolaus/cljgae-template "0.2.3-SNAPSHOT"]
+[org.clojars.nicolaus/cljgae-template "0.2.4-SNAPSHOT"]
 ```
 
 ## Usage
@@ -85,11 +85,14 @@ emphasis on Clojure's more functional idiom.) Queries return a lazy sequence.
   (query-AnotherEntity [] [:keys-only true :ancestor-key (gae-key root-entity)])
   (query-AnotherEntity [] [:ancestor-key (gae-key root-entity) :keys-only true])
                                         ; ancestors that work with order-by
-  (query-AnotherEntity [] [:ancestor-key (gae-key root-entity) :order-by :int-value :desc]))
+  (query-AnotherEntity [] [:ancestor-key (gae-key root-entity) :order-by :int-value :desc])
                                         ; transactions
   (with-transaction
-     (save! (create-AnotherEntity "Content information" (t/date-time 1984 10 12) 201))
-     (save! (create-AnotherEntity "More content information" (t/date-time 1984 10 12) 201)))
+     (save! (create-AnotherEntity "Content information" (t/date-time 1984 10 12) 201)))
+                                        ; Cross-group transactions
+  (with-xg-transaction
+     (save! (create-AnotherEntity "Content information" (t/date-time 1984 10 12) 6001))
+     (save! (create-AnotherEntity "More content information" (t/date-time 1984 10 12) 6002))))
 ```
 
 ## Future directions
@@ -101,7 +104,7 @@ emphasis on Clojure's more functional idiom.) Queries return a lazy sequence.
 
 ## License
 
-Copyright © 2016 Peter Schwarz and Nick Bauman
+Copyright © 2016, 2017 Peter Schwarz and Nick Bauman
 
 Distributed under the Eclipse Public License either version 1.0 or (at your 
 option) any later version.
