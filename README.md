@@ -3,12 +3,12 @@
 A Leiningen template for creating useful and productive GAE apps in Clojure 
 using the GAE Java SDK.
 
-## Release 0.2.4-SNAPSHOT
+## Release 0.2.5-SNAPSHOT
 
 Leiningen Clojars dependency:
 
 ```clojure
-[org.clojars.nicolaus/cljgae-template "0.2.4-SNAPSHOT"]
+[org.clojars.nicolaus/cljgae-template "0.2.5-SNAPSHOT"]
 ```
 
 ## Usage
@@ -25,6 +25,7 @@ usage of a few appengine APIs such as
 * The App Identity Service API (via "/" route) 
 * Asyncronous task queues / AKA appengine"push queues" (via a JSON request of 
   a "large" list of data points)
+* User services with user state examples
 
 With unit tests for each. All examples also run on the dev appserver.
 

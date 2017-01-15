@@ -1,4 +1,4 @@
-(ns {{name}}.appengine
+(ns {{name}}.appidentity
   (:require [clj-time.coerce :as c]
             [{{name}}.util :refer :all])
   (:import [com.google.appengine.api.utils SystemProperty]
