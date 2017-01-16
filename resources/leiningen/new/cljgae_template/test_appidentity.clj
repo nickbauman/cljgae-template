@@ -1,8 +1,8 @@
-(ns {{name}}.test.appengine
+(ns {{name}}.test.appidentity
     (:require [clojure.test :refer :all]
               [clj-time.coerce :as c]
               [{{name}}.test.fixtures :as fixtures]
-              [{{name}}.appengine :refer :all]))
+              [{{name}}.appidentity :refer :all]))
 
 (use-fixtures :once fixtures/setup-local-service-test-helper)
 

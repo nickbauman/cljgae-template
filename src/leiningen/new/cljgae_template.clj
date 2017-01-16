@@ -13,7 +13,8 @@
     (main/info (str "Generating new cljgae-template project '" name "'"))
     (->files data
              ; {{name}} package
-             ["src/{{sanitized}}/appengine.clj" (render "appengine.clj" data)]
+             ["src/{{sanitized}}/appidentity.clj" (render "appidentity.clj" data)]
+             ["src/{{sanitized}}/auth.clj" (render "auth.clj" data)]
              ["src/{{sanitized}}/db.clj" (render "db.clj" data)]
              ["src/{{sanitized}}/env.clj" (render "env.clj" data)]
              ["src/{{sanitized}}/gcs.clj" (render "gcs.clj" data)]
@@ -27,7 +28,8 @@
              ["test/{{sanitized}}/test/file_example.jpg" (render "file_example.jpg" data)]
              ["test/{{sanitized}}/test/events.json" (render "events.json" data)]
              ["test/{{sanitized}}/test/fixtures.clj" (render "fixtures.clj" data)]
-             ["test/{{sanitized}}/test/appengine.clj" (render "test_appengine.clj" data)]
+             ["test/{{sanitized}}/test/appidentity.clj" (render "test_appidentity.clj" data)]
+             ["test/{{sanitized}}/test/auth.clj" (render "test_auth.clj" data)]
              ["test/{{sanitized}}/test/db.clj" (render "test_db.clj" data)]
              ["test/{{sanitized}}/test/handler.clj" (render "test_handler.clj" data)]
              ["test/{{sanitized}}/test/helpers.clj" (render "helpers.clj" data)]

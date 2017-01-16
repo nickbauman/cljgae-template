@@ -1,5 +1,5 @@
 (ns {{name}}.env
-  (:require [{{name}}.appengine :as a]))
+  (:require [{{name}}.appidentity :as a]))
 
 (def environment (let [app-eng-env (a/environment)
                        app-name (a/application-id)]

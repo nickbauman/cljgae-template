@@ -11,6 +11,7 @@
     <url-pattern>/*</url-pattern>
   </servlet-mapping>
  
+  <!--
   <security-constraint>
         <web-resource-collection>
             <web-resource-name>admin</web-resource-name>
@@ -20,4 +21,5 @@
             <role-name>admin</role-name>
         </auth-constraint>
     </security-constraint>
+  -->
 </web-app>
