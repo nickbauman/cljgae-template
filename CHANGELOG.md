@@ -2,11 +2,19 @@
 
 All notable changes to this project will be documented in this file. This change log follows the conventions of [keepachangelog.com](http://keepachangelog.com/).
 
-**Version 0.2.4-SNAPSHOT: current**
+**Version 0.3.0-SNAPSHOT: current**
+
+## [0.3.0-SNAPSHOT]
+### Moves nascent libraries into their own repos for better composability and licensing. Switches template to BSD license.
+[0.3.0-SNAPSHOT](https://github.com/nickbauman/cljgae-template/compare/0.2.5-SNAPSHOT...0.3.0-SNAPSHOT)
+
+## [0.2.5-SNAPSHOT]
+### Support for UserService: login and logout services in auth.clj
+[0.2.5-SNAPSHOT](https://github.com/nickbauman/cljgae-template/compare/0.2.4-SNAPSHOT...0.2.5-SNAPSHOT)
 
 ## [0.2.4-SNAPSHOT]
 ### Support for datastore cross-group transactions, upgrade project dependencies, use latest version of app engine.
-[0.2.3-SNAPSHOT](https://github.com/nickbauman/cljgae-template/compare/0.2.3-SNAPSHOT...0.2.4-SNAPSHOT)
+[0.2.4-SNAPSHOT](https://github.com/nickbauman/cljgae-template/compare/0.2.3-SNAPSHOT...0.2.4-SNAPSHOT)
 
 ## [0.2.3-SNAPSHOT]
 ### Support for datastore transactions
