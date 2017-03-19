@@ -13,7 +13,7 @@
             [{{name}}.env :as env]
             [{{name}}.gcs :as gcs]
             [{{name}}.push-queue :as pq]
-            [{{name}}.db :as db]
+            [gaeclj.ds :as db]
             [{{name}}.env :as env]
             [{{name}}.model :as m]
             [{{name}}.view :refer [home file-upload-form]])

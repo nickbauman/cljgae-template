@@ -15,7 +15,6 @@
              ; {{name}} package
              ["src/{{sanitized}}/appidentity.clj" (render "appidentity.clj" data)]
              ["src/{{sanitized}}/auth.clj" (render "auth.clj" data)]
-             ["src/{{sanitized}}/db.clj" (render "db.clj" data)]
              ["src/{{sanitized}}/env.clj" (render "env.clj" data)]
              ["src/{{sanitized}}/gcs.clj" (render "gcs.clj" data)]
              ["src/{{sanitized}}/handler.clj" (render "handler.clj" data)]
@@ -30,7 +29,6 @@
              ["test/{{sanitized}}/test/fixtures.clj" (render "fixtures.clj" data)]
              ["test/{{sanitized}}/test/appidentity.clj" (render "test_appidentity.clj" data)]
              ["test/{{sanitized}}/test/auth.clj" (render "test_auth.clj" data)]
-             ["test/{{sanitized}}/test/db.clj" (render "test_db.clj" data)]
              ["test/{{sanitized}}/test/handler.clj" (render "test_handler.clj" data)]
              ["test/{{sanitized}}/test/helpers.clj" (render "helpers.clj" data)]
              ["test/{{sanitized}}/test/push_queue.clj" (render "test_push_queue.clj" data)]
