@@ -1,10 +1,10 @@
 (ns {{name}}.test.handler
-    (:require [{{name}}.env :as env]
-              [{{name}}.gcs :as gcs]
-              [{{name}}.handler :as handler]
+    (:require [{{name}}.handler :as handler]
               [{{name}}.test.helpers :as helper]
               [{{name}}.test.fixtures :as fixtures]
               [{{name}}.util :refer [try-with-default]]
+              [gaeclj.gcs :as gcs]
+              [gaeclj.env :as env]
               [ring.util.codec :refer [form-decode]]
               [clojure.data.json :as json]
               [clojure.java.io :as io]

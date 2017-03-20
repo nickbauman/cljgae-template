@@ -2,10 +2,10 @@
   (:require [hiccup.page :as page]
     [{{name}}.auth :as auth]
     [{{name}}.push-queue :as pq]
-    [{{name}}.appidentity :refer [sdk-version app-version
+    [gaeclj.appidentity :refer [sdk-version app-version
                            application-id environment
                            last-deployed-datetime]]
-    [{{name}}.env :as env]
+    [gaeclj.env :as env]
     [clj-time.format :as f]
     [clj-time.core :as t]))
 
