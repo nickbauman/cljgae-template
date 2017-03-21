@@ -28,6 +28,7 @@
                   :exclusions [com.google.guava/guava-jdk5]]       
                  [com.google.http-client/google-http-client-appengine "1.22.0"
                   :exclusions [com.google.guava/guava-jdk5]]
+                 [gaeclj-pq "0.1.0"]
                  [gaeclj-auth "0.1.0"]
                  [gaeclj-ds "0.1.0"]
                  [gaeclj-gcs "0.1.1"]]

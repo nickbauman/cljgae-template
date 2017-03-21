@@ -15,7 +15,6 @@
              ; {{name}} package
              ["src/{{sanitized}}/handler.clj" (render "handler.clj" data)]
              ["src/{{sanitized}}/model.clj" (render "model.clj" data)]
-             ["src/{{sanitized}}/push_queue.clj" (render "push_queue.clj" data)]
              ["src/{{sanitized}}/repl.clj" (render "repl.clj" data)]
              ["src/{{sanitized}}/util.clj" (render "util.clj" data)]
              ["src/{{sanitized}}/view.clj" (render "view.clj" data)]
@@ -25,7 +24,6 @@
              ["test/{{sanitized}}/test/fixtures.clj" (render "fixtures.clj" data)]
              ["test/{{sanitized}}/test/handler.clj" (render "test_handler.clj" data)]
              ["test/{{sanitized}}/test/helpers.clj" (render "helpers.clj" data)]
-             ["test/{{sanitized}}/test/push_queue.clj" (render "test_push_queue.clj" data)]
              ["test/{{sanitized}}/test/util.clj" (render "test_util.clj" data)]
              ; WEB-INF
              ["war-resources/WEB-INF/datastore-indexes.xml" (render "datastore-indexes.xml" data)]
