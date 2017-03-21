@@ -11,6 +11,16 @@ Leiningen Clojars dependency:
 [org.clojars.nicolaus/cljgae-template "0.3.0-SNAPSHOT"]
 ```
 
+## Installation
+
+To use this template locally, installing it into your library cache - ~/.m2/repository/. 
+
+From the root of the template project, run the following command:
+
+```shell
+lein install
+````
+
 ## Usage
 
     lein new cljgae-template <project name>
