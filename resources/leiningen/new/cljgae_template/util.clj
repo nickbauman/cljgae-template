@@ -9,7 +9,7 @@
      (catch Exception ~'ex
        (do 
          (log/warn (str "Failed with " (type ~'ex) ": " (.getMessage ~'ex) ". Defaulting to " ~default))
-         ~default) )))
+         ~default))))
 
 (defn name? [maybe-kw]
   "Gets the name of a keyword, if its a keyword, otherwise returns itself."
@@ -20,5 +20,3 @@
 (defn in [scalar sequence]
   "Returns true if scalar value is found in sequence, otherwise returns nil"
   (some #(= scalar %) sequence))
-
-

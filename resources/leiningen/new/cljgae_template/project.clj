@@ -27,7 +27,12 @@
                  [com.google.oauth-client/google-oauth-client-appengine "1.22.0"
                   :exclusions [com.google.guava/guava-jdk5]]       
                  [com.google.http-client/google-http-client-appengine "1.22.0"
-                  :exclusions [com.google.guava/guava-jdk5]]]
+                  :exclusions [com.google.guava/guava-jdk5]]
+                 [gaeclj-pq "0.1.0"]
+                 [gaeclj-auth "0.1.0"]
+                 [gaeclj-ds "0.1.0"]
+                 [gaeclj-gcs "0.1.1"]]
+
   :java-source-paths ["src-java"]
   :plugins [[lein-ring "0.9.7"]]
   :ring {:handler {{name}}.handler/app

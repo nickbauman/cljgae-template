@@ -13,14 +13,8 @@
     (main/info (str "Generating new cljgae-template project '" name "'"))
     (->files data
              ; {{name}} package
-             ["src/{{sanitized}}/appidentity.clj" (render "appidentity.clj" data)]
-             ["src/{{sanitized}}/auth.clj" (render "auth.clj" data)]
-             ["src/{{sanitized}}/db.clj" (render "db.clj" data)]
-             ["src/{{sanitized}}/env.clj" (render "env.clj" data)]
-             ["src/{{sanitized}}/gcs.clj" (render "gcs.clj" data)]
              ["src/{{sanitized}}/handler.clj" (render "handler.clj" data)]
              ["src/{{sanitized}}/model.clj" (render "model.clj" data)]
-             ["src/{{sanitized}}/push_queue.clj" (render "push_queue.clj" data)]
              ["src/{{sanitized}}/repl.clj" (render "repl.clj" data)]
              ["src/{{sanitized}}/util.clj" (render "util.clj" data)]
              ["src/{{sanitized}}/view.clj" (render "view.clj" data)]
@@ -28,12 +22,8 @@
              ["test/{{sanitized}}/test/file_example.jpg" (render "file_example.jpg" data)]
              ["test/{{sanitized}}/test/events.json" (render "events.json" data)]
              ["test/{{sanitized}}/test/fixtures.clj" (render "fixtures.clj" data)]
-             ["test/{{sanitized}}/test/appidentity.clj" (render "test_appidentity.clj" data)]
-             ["test/{{sanitized}}/test/auth.clj" (render "test_auth.clj" data)]
-             ["test/{{sanitized}}/test/db.clj" (render "test_db.clj" data)]
              ["test/{{sanitized}}/test/handler.clj" (render "test_handler.clj" data)]
              ["test/{{sanitized}}/test/helpers.clj" (render "helpers.clj" data)]
-             ["test/{{sanitized}}/test/push_queue.clj" (render "test_push_queue.clj" data)]
              ["test/{{sanitized}}/test/util.clj" (render "test_util.clj" data)]
              ; WEB-INF
              ["war-resources/WEB-INF/datastore-indexes.xml" (render "datastore-indexes.xml" data)]

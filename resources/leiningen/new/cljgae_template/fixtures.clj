@@ -1,7 +1,7 @@
 (ns {{name}}.test.fixtures
 (:import [com.google.appengine.tools.development.testing 
           LocalServiceTestConfig 
-          LocalServiceTestHelper 
+          LocalServiceTestHelper
           LocalFileServiceTestConfig 
           LocalDatastoreServiceTestConfig
           LocalTaskQueueTestConfig
@@ -11,7 +11,7 @@
 (:use clojure.test
       ring.mock.request
       {{name}}.handler
-      {{name}}.gcs))
+      gaeclj.gcs))
 
 (defn delete-recursively [fname]
   (let [func (fn [func f]

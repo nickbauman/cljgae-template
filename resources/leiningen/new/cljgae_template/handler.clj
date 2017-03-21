@@ -10,15 +10,14 @@
             [clojure.tools.logging :as log]
             [clj-time.core :as t]
             [clojure.java.io :as io]
-            [{{name}}.env :as env]
-            [{{name}}.gcs :as gcs]
-            [{{name}}.push-queue :as pq]
-            [{{name}}.db :as db]
-            [{{name}}.env :as env]
+            [gaeclj.env :as env]
+            [gaeclj.gcs :as gcs]
+            [gaeclj.ds :as db]
+            [gaeclj.env :as env]
+            [{{name}}.push-queue :as pq]         
             [{{name}}.model :as m]
             [{{name}}.view :refer [home file-upload-form]])
   (:import [java.io InputStreamReader]))
-
 
 (defn init []
   (log/info "{{name}} is starting on" env/environment))
