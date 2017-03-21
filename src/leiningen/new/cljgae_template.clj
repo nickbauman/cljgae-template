@@ -13,7 +13,6 @@
     (main/info (str "Generating new cljgae-template project '" name "'"))
     (->files data
              ; {{name}} package
-             ["src/{{sanitized}}/auth.clj" (render "auth.clj" data)]
              ["src/{{sanitized}}/handler.clj" (render "handler.clj" data)]
              ["src/{{sanitized}}/model.clj" (render "model.clj" data)]
              ["src/{{sanitized}}/push_queue.clj" (render "push_queue.clj" data)]
@@ -24,7 +23,6 @@
              ["test/{{sanitized}}/test/file_example.jpg" (render "file_example.jpg" data)]
              ["test/{{sanitized}}/test/events.json" (render "events.json" data)]
              ["test/{{sanitized}}/test/fixtures.clj" (render "fixtures.clj" data)]
-             ["test/{{sanitized}}/test/auth.clj" (render "test_auth.clj" data)]
              ["test/{{sanitized}}/test/handler.clj" (render "test_handler.clj" data)]
              ["test/{{sanitized}}/test/helpers.clj" (render "helpers.clj" data)]
              ["test/{{sanitized}}/test/push_queue.clj" (render "test_push_queue.clj" data)]

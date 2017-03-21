@@ -1,7 +1,7 @@
 (ns {{name}}.test.fixtures
 (:import [com.google.appengine.tools.development.testing 
           LocalServiceTestConfig 
-          LocalServiceTestHelper 
+          LocalServiceTestHelper
           LocalFileServiceTestConfig 
           LocalDatastoreServiceTestConfig
           LocalTaskQueueTestConfig
