@@ -8,7 +8,7 @@ using the GAE Java SDK.
 Leiningen Clojars dependency:
 
 ```clojure
-[org.clojars.nicolaus/cljgae-template "0.3.0-SNAPSHOT"]
+[org.clojars.nickbauman/cljgae-template "0.3.0-SNAPSHOT"]
 ```
 
 ## Installation
