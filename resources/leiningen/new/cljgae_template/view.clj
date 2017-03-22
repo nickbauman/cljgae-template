@@ -1,7 +1,7 @@
 (ns {{name}}.view
   (:require [hiccup.page :as page]
-    [{{name}}.auth :as auth]
-    [{{name}}.push-queue :as pq]
+    [gaeclj.auth :as auth]
+    [gaeclj.push-queue :as pq]
     [gaeclj.appidentity :refer [sdk-version app-version
                            application-id environment
                            last-deployed-datetime]]

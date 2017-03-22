@@ -28,10 +28,10 @@
                   :exclusions [com.google.guava/guava-jdk5]]       
                  [com.google.http-client/google-http-client-appengine "1.22.0"
                   :exclusions [com.google.guava/guava-jdk5]]
-                 [gaeclj-pq "0.1.0"]
+                 [gaeclj-pq "0.1.2"]
                  [gaeclj-auth "0.1.0"]
                  [gaeclj-ds "0.1.0"]
-                 [gaeclj-gcs "0.1.1"]]
+                 [gaeclj-gcs "0.1.3"]]
 
   :java-source-paths ["src-java"]
   :plugins [[lein-ring "0.9.7"]]

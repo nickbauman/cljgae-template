@@ -3,12 +3,12 @@
 A Leiningen template for creating useful and productive GAE apps in Clojure 
 using the GAE Java SDK.
 
-## Release 0.3.0-SNAPSHOT
+## Release 0.3.1-SNAPSHOT
 
 Leiningen Clojars dependency:
 
 ```clojure
-[org.clojars.nickbauman/cljgae-template "0.3.0-SNAPSHOT"]
+[org.clojars.nickbauman/cljgae-template "0.3.1-SNAPSHOT"]
 ```
 
 ## Installation

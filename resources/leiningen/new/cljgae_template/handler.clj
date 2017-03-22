@@ -14,7 +14,8 @@
             [gaeclj.gcs :as gcs]
             [gaeclj.ds :as db]
             [gaeclj.env :as env]
-            [{{name}}.push-queue :as pq]         
+            [gaeclj.push-queue :as pq]
+            [{{name}}.util :as u]
             [{{name}}.model :as m]
             [{{name}}.view :refer [home file-upload-form]])
   (:import [java.io InputStreamReader]))
