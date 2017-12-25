@@ -11,3 +11,5 @@ pom.xml.asc
 .hg/
 foobarbaz
 *.DS_Store
+.idea
+cljgae-template.iml
