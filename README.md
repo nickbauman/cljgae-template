@@ -115,7 +115,7 @@ emphasis on Clojure's more functional idiom.) Queries return a lazy sequence.
 
 ## License
 
-Copyright © 2016, 2017 Peter Schwarz and Nick Bauman
+Copyright © 2016, 2017, 2018 Peter Schwarz and Nick Bauman
 
 Distributed under the Eclipse Public License either version 1.0 or (at your 
 option) any later version.
