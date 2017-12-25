@@ -28,7 +28,7 @@
       (is (= (:status response) 404))))
 
   (testing "upload file and store in google cloud storage"
-    (let [expected-filename "test/{{name}}/test/file_example.jpg"
+    (let [expected-filename "test/{{sanitized}}/test/file_example.jpg"
           temp-file (helper/create-temp-file expected-filename)
           file-data (helper/get-file-contents (.getAbsolutePath temp-file))
           response (handler/do-save {"thefile" {:bytes file-data :content-type "image/jpeg" :filename expected-filename}})
@@ -38,7 +38,7 @@
       (is (= (String. file-data) actual-filecontents))))
 
   (testing "post data for later processing via appengine task queue"
-    (let [json-to-process (helper/get-file-contents "test/{{name}}/test/events.json")
+    (let [json-to-process (helper/get-file-contents "test/{{sanitized}}/test/events.json")
           all-json-processed (json/read-str (String. json-to-process "UTF-8"))
           req (-> (request :post "/process-json-bg")
                   (body json-to-process)
