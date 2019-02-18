@@ -50,12 +50,12 @@
       (let [queue-state-info (helper/get-default-queue (helper/get-local-queue-infra))
             tasks (helper/get-tasks queue-state-info)]
         ; break it into parts
-        (is (= 24 (.getCountTasks queue-state-info)))
-        (is (= 24 (count tasks)))
+        (is (= 6 (.getCountTasks queue-state-info)))
+        (is (= 6 (count tasks)))
         
         (let [task-info (first tasks)
               decoded-task-body (form-decode (:body task-info))
-              expected-task (first (filter #(= (str (get % "event_ts")) (get decoded-task-body "event_ts")) all-json-processed))]
+              expected-task (first (filter #(= (str (get % "about")) (get decoded-task-body "about")) all-json-processed))]
           (is (= "/save-json" (:url task-info)))
           (is (= (.size expected-task)
                  (.size decoded-task-body)))

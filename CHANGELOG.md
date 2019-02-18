@@ -2,7 +2,11 @@
 
 All notable changes to this project will be documented in this file. This change log follows the conventions of [keepachangelog.com](http://keepachangelog.com/).
 
-**Version 0.3.2: current**
+**Version 0.3.3: current**
+
+## [0.3.3]
+### Upgrades dependencies in generated project. Updates appengine version tested (google-cloud-sdk-234.0.0). Fixes bug in rendering binary template resources.
+[0.3.2](https://github.com/nickbauman/cljgae-template/compare/0.3.2...0.3.3)
 
 ## [0.3.2]
 ### Fixes hypenation bug in project test harness. Drops snapshot.
