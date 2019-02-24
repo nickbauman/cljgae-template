@@ -1,11 +1,18 @@
 (ns leiningen.new.cljgae-template
-  (:require [leiningen.new.templates :refer [renderer name-to-path ->files]]
+  (:require [clojure.java.io :refer [input-stream]]
+            [leiningen.new.templates :refer [renderer name-to-path ->files slurp-resource]]
             [leiningen.core.main :as main]))
 
 (def render (renderer "cljgae-template"))
 
+(defn raw-copy
+      "Use in case of binary files that just need to be copied verbatim.
+      (... the default renderer apparently tries to decode the file :/)"
+      [filename, data]
+      (input-stream (clojure.string/join "/" ["resources/leiningen/new/cljgae_template" filename])))
+
 (defn cljgae-template
-  "FIXME: write documentation"
+  "Expands template vars over files, as needed"
   [name]
   (let [data {:name name
               :year (+ 1900 (.getYear (new java.util.Date)))
@@ -19,7 +26,7 @@
              ["src/{{sanitized}}/util.clj" (render "util.clj" data)]
              ["src/{{sanitized}}/view.clj" (render "view.clj" data)]
              ; tests
-             ["test/{{sanitized}}/test/file_example.jpg" (render "file_example.jpg" data)]
+             ["test/{{sanitized}}/test/file_example.jpg" (raw-copy "file_example.jpg", data)]
              ["test/{{sanitized}}/test/events.json" (render "events.json" data)]
              ["test/{{sanitized}}/test/fixtures.clj" (render "fixtures.clj" data)]
              ["test/{{sanitized}}/test/handler.clj" (render "test_handler.clj" data)]
