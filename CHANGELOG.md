@@ -6,43 +6,43 @@ All notable changes to this project will be documented in this file. This change
 
 ## [0.3.3]
 ### Upgrades dependencies in generated project. Updates appengine version tested (google-cloud-sdk-234.0.0). Fixes bug in rendering binary template resources.
-[0.3.2](https://github.com/nickbauman/cljgae-template/compare/0.3.2...0.3.3)
+[Changes since 0.3.2](https://github.com/nickbauman/cljgae-template/compare/0.3.2...0.3.3)
 
 ## [0.3.2]
 ### Fixes hypenation bug in project test harness. Drops snapshot.
-[0.3.2](https://github.com/nickbauman/cljgae-template/compare/0.3.1-SNAPSHOT...0.3.2)
+[Changes since 0.3.1](https://github.com/nickbauman/cljgae-template/compare/0.3.1-SNAPSHOT...0.3.2)
 
 ## [0.3.1-SNAPSHOT]
 ### Bug fixes
-[0.3.1-SNAPSHOT](https://github.com/nickbauman/cljgae-template/compare/0.3.0-SNAPSHOT...0.3.1-SNAPSHOT)
+[Changes since 0.3.0-SNAPSHOT](https://github.com/nickbauman/cljgae-template/compare/0.3.0-SNAPSHOT...0.3.1-SNAPSHOT)
 
 ## [0.3.0-SNAPSHOT]
 ### Moves nascent libraries into their own repos for better composability and licensing. Switches template to BSD license.
-[0.3.0-SNAPSHOT](https://github.com/nickbauman/cljgae-template/compare/0.2.5-SNAPSHOT...0.3.0-SNAPSHOT)
+[Changes since 0.2.5-SNAPSHOT](https://github.com/nickbauman/cljgae-template/compare/0.2.5-SNAPSHOT...0.3.0-SNAPSHOT)
 
 ## [0.2.5-SNAPSHOT]
 ### Support for UserService: login and logout services in auth.clj
-[0.2.5-SNAPSHOT](https://github.com/nickbauman/cljgae-template/compare/0.2.4-SNAPSHOT...0.2.5-SNAPSHOT)
+[Changes since 0.2.4-SNAPSHOT](https://github.com/nickbauman/cljgae-template/compare/0.2.4-SNAPSHOT...0.2.5-SNAPSHOT)
 
 ## [0.2.4-SNAPSHOT]
 ### Support for datastore cross-group transactions, upgrade project dependencies, use latest version of app engine.
-[0.2.4-SNAPSHOT](https://github.com/nickbauman/cljgae-template/compare/0.2.3-SNAPSHOT...0.2.4-SNAPSHOT)
+[Changes since 0.2.3-SNAPSHOT](https://github.com/nickbauman/cljgae-template/compare/0.2.3-SNAPSHOT...0.2.4-SNAPSHOT)
 
 ## [0.2.3-SNAPSHOT]
 ### Support for datastore transactions
-[0.2.3-SNAPSHOT](https://github.com/nickbauman/cljgae-template/compare/0.2.2-SNAPSHOT...0.2.3-SNAPSHOT)
+[Changes since 0.2.2-SNAPSHOT](https://github.com/nickbauman/cljgae-template/compare/0.2.2-SNAPSHOT...0.2.3-SNAPSHOT)
 
 ## [0.2.2-SNAPSHOT]
 ### Ancestor query support
-[0.2.2-SNAPSHOT](https://github.com/nickbauman/cljgae-template/compare/0.2.1-SNAPSHOT...0.2.2-SNAPSHOT)
+[Changes since 0.2.1-SNAPSHOT](https://github.com/nickbauman/cljgae-template/compare/0.2.1-SNAPSHOT...0.2.2-SNAPSHOT)
 
 ## [0.2.1-SNAPSHOT]
 ### Clean up code: refactoring and simplifying. No new features.
-[0.2.1-SNAPSHOT](https://github.com/nickbauman/cljgae-template/compare/0.2.0-SNAPSHOT...0.2.1-SNAPSHOT)
+[Changes since 0.2.0-SNAPSHOT](https://github.com/nickbauman/cljgae-template/compare/0.2.0-SNAPSHOT...0.2.1-SNAPSHOT)
 
 ## [0.2.0-SNAPSHOT]
 ### Query language support with basic predicates, compound predicates, nested and compound predicates, sort orders and keys-only support, some refactoring.
-[0.2.0-SNAPSHOT](https://github.com/nickbauman/cljgae-template/compare/0.1.0-SNAPSHOT...0.2.0-SNAPSHOT)
+[Changes since 0.1.0-SNAPSHOT](https://github.com/nickbauman/cljgae-template/compare/0.1.0-SNAPSHOT...0.2.0-SNAPSHOT)
 
 ## [0.1.0-SNAPSHOT]
 ### Added
