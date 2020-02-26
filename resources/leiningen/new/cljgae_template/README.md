@@ -40,4 +40,4 @@ This requires that the App Engine Java SDK is installed locally and in your path
 
 ## License
 
-Copyright © 2016 FIXME
+Copyright © 2020 FIXME

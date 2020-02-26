@@ -1,4 +1,4 @@
-(defproject org.clojars.nickbauman/cljgae-template "0.3.3"
+(defproject org.clojars.nickbauman/cljgae-template "0.3.4"
   :description "cljgae-template is a leiningen template for Google App Engine apps"
   :url "https://github.com/nickbauman/cljgae-template"
   :license {:name "Eclipse Public License"

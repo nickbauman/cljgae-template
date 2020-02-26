@@ -2,7 +2,11 @@
 
 All notable changes to this project will be documented in this file. This change log follows the conventions of [keepachangelog.com](http://keepachangelog.com/).
 
-**Version 0.3.3: current**
+**Version 0.3.4: current**
+
+## [0.3.4]
+### Upgrades dependencies in generated project. Updates appengine version tested 1.9.78 (google-cloud-sdk-282.0.0). 
+[Changes since 0.3.3](https://github.com/nickbauman/cljgae-template/compare/0.3.3...0.3.4)
 
 ## [0.3.3]
 ### Upgrades dependencies in generated project. Updates appengine version tested (google-cloud-sdk-234.0.0). Fixes bug in rendering binary template resources.

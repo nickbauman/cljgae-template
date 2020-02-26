@@ -3,12 +3,14 @@
 A Leiningen template for creating useful and productive GAE apps in Clojure 
 using the GAE Java SDK.
 
-## Release 0.3.3
+[![Clojars Project](https://img.shields.io/clojars/v/org.clojars.nickbauman/cljgae-template.svg)](https://clojars.org/org.clojars.nickbauman/cljgae-template)
+
+## Release 0.3.4
 
 Leiningen Clojars dependency:
 
 ```clojure
-[org.clojars.nickbauman/cljgae-template "0.3.3"]
+[org.clojars.nickbauman/cljgae-template "0.3.4"]
 ```
 
 ## Installation
@@ -104,18 +106,26 @@ emphasis on Clojure's more functional idiom.) Queries return a lazy sequence.
   (with-xg-transaction
      (save! (create-AnotherEntity "Content information" (t/date-time 1984 10 12) 6001))
      (save! (create-AnotherEntity "More content information" (t/date-time 1984 10 12) 6002))))
+                                        ; Deleting
+  (delete! entity) ; or (delete! {:key (:key entity)})
+   (delete! entity2)
+   (delete! entity3)
+   (delete! child-entity1)
+   (delete! child-entity2)
+   (delete! root-entity)
 ```
 
 ## Future directions
 
-* Add support for projections
+* Add support for datastore projections
+* Dialects for Firestore and PostgresSQL with ETLs between them
 * More comprehensive examples of task queues
 * More comprehensive use of cloud storage
 * Examples of other commonly used GAE apis
 
 ## License
 
-Copyright © 2016, 2017, 2018 Peter Schwarz and Nick Bauman
+Copyright © 2016-2020 Peter Schwarz and Nick Bauman
 
 Distributed under the Eclipse Public License either version 1.0 or (at your 
 option) any later version.
