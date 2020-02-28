@@ -32,7 +32,7 @@ This requires that the App Engine Java SDK is installed locally and in your path
 
 ## Deploying
 
-To deploy to App Engine
+To deploy to App Engine, make sure the project ID exists and has been initialized to the Java8 Runtime
 
     > ./deploy.sh
 

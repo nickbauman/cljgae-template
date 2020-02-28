@@ -3,13 +3,13 @@
 A Leiningen template for creating useful and productive GAE apps in Clojure 
 using the GAE Java SDK.
 
-## Release 0.3.3
+[![Clojars Project](https://img.shields.io/clojars/v/org.clojars.nickbauman/cljgae-template.svg)](https://clojars.org/org.clojars.nickbauman/cljgae-template)
+
+## Release 0.4.0
 
 Leiningen Clojars dependency:
 
-```clojure
-[org.clojars.nickbauman/cljgae-template "0.3.3"]
-```
+[org.clojars.nickbauman/cljgae-template "0.4.0"]
 
 ## Installation
 
@@ -26,7 +26,7 @@ lein install
     lein new cljgae-template <project name>
 
 Creates a new appengine project on disk under dir <project name> that should run
-on the latest GAE. It has a few routes with corresponding tests which show the 
+on the latest GAE Java8 Runtime. It has a few routes with corresponding tests which show the 
 usage of a few appengine APIs such as 
 
 * Google Cloud Storage (via file upload test example)
@@ -47,14 +47,15 @@ emphasis on Clojure's more functional idiom.) Queries return a lazy sequence.
 ### Examples
 
 ```clojure
-(defentity BasicEntity [content saved-time])
+(defentity BasicEntity [content saved-time repeated-value])
 
 (defentity AnotherEntity [content saved-time int-value])
 
 (let [entity (save! (create-AnotherEntity "Some content woo" (t/date-time 1980 3 5) 6))
       entity2 (save! (create-AnotherEntity "Other content" (t/date-time 1984 10 12) 91))
       entity3 (save! (create-AnotherEntity "More interesting content" (t/date-time 1984 10 12) 17))
-      root-entity (save! (create-BasicEntity "basic entity content" (t/date-time 2015 6 8)))
+                                        ; repeated properties
+      root-entity (save! (create-BasicEntity "basic entity content" (t/date-time 2015 6 8) [1 2 3])) 
       child-entity1 (save! (create-AnotherEntity "child one content" (t/date-time 2016 12 10) 33) (gae-key root-entity))
       child-entity2 (save! (create-AnotherEntity "child two content" (t/date-time 2016 12 10) 44) (gae-key root-entity))]   
                                         ; query all
@@ -115,7 +116,7 @@ emphasis on Clojure's more functional idiom.) Queries return a lazy sequence.
 
 ## License
 
-Copyright © 2016, 2017, 2018 Peter Schwarz and Nick Bauman
+Copyright © 2016-2020 Peter Schwarz and Nick Bauman
 
 Distributed under the Eclipse Public License either version 1.0 or (at your 
 option) any later version.

@@ -43,4 +43,5 @@
              ["README.md" (render "README.md" data)]
              ["deploy.sh" (render "deploy.sh" data)]
              ["run-dev.sh" (render "run-dev.sh" data)]
+             ["pom.xml" (render "pom.xml" data)]
              ["project.clj" (render "project.clj" data)])))
