@@ -1,15 +1,15 @@
 # cljgae-template
 
-A Leiningen template for creating useful and productive GAE apps in Clojure 
+A Leiningen template for creating useful and productive Google App Engine apps in Clojure 
 using the GAE Java SDK.
 
 [![Clojars Project](https://img.shields.io/clojars/v/org.clojars.nickbauman/cljgae-template.svg)](https://clojars.org/org.clojars.nickbauman/cljgae-template)
 
-## Release 0.4.0
+## Release 0.4.1
 
 Leiningen Clojars dependency:
 
-[org.clojars.nickbauman/cljgae-template "0.4.0"]
+[org.clojars.nickbauman/cljgae-template "0.4.1"]
 
 ## Installation
 
@@ -107,8 +107,51 @@ emphasis on Clojure's more functional idiom.) Queries return a lazy sequence.
      (save! (create-AnotherEntity "More content information" (t/date-time 1984 10 12) 6002))))
 ```
 
+### Validation
+
+Validation of datastore entity models is optional. Adding validation involves putting a vector of keys that match your 
+model properties followed by a fully qualified function property. For example:
+
+```clojure 
+(ns gaeclj.example.valid
+  (:require [gaeclj.ds :refer [defentity]]))
+
+(defentity CostStrategy
+           [uuid
+            create-date
+            cost-uuid
+            strategy-description
+            ordered-member-uuids
+            ordered-percentages]
+           [:uuid                 gaeclj.valid/valid-uuid?
+            :create-date          gaeclj.valid/long?
+            :cost-uuid            gaeclj.valid/valid-uuid?
+            :strategy-description gaeclj.valid/string-or-nil?
+            :ordered-member-uuids gaeclj.valid/repeated-uuid?
+            :ordered-amounts      gaeclj.valid/repeated-longs?])
+```
+
+Creating a CostStrategy like this
+
+```clojure
+(create-CostStrategy "8e5625f8-60ec-11ea-a1ec-a45e60d5bfab"
+                                   (.getMillis (t/date-time 1999 12 31))
+                                   (str (uuid/v1))
+                                   "even distribution"
+                                   [(str (uuid/v1)) (str (uuid/v1))]
+                                   ["foo" "bar"]) ; not valid
+```
+ 
+... would cause a `RuntimeException` citing the two properties:
+
+```text
+java.lang.RuntimeException: (create-CostStrategy ...) failed validation for props :ordered-amounts
+```
+
 ## Future directions
 
+* Firestore dialect
+* Postgres dialect
 * Add support for projections
 * More comprehensive examples of task queues
 * More comprehensive use of cloud storage

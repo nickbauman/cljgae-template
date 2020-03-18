@@ -2,7 +2,11 @@
 
 All notable changes to this project will be documented in this file. This change log follows the conventions of [keepachangelog.com](http://keepachangelog.com/).
 
-**Version 0.4.0: current**
+**Version 0.4.1: current**
+
+## [0.4.1]
+### Ugrades datastore library to gaeclj.ds 0.1.3.1 including entity validation
+[Changes since 0.4.1](https://github.com/nickbauman/cljgae-template/compare/0.4.0...0.4.1)
 
 ## [0.4.0]
 ### Upgrades dependencies in generated project again. Updates appengine version tested 1.9.78 (google-cloud-sdk-282.0.0). Fixes problems with deploy and packaging required for the Java8 Runtime
@@ -13,7 +17,7 @@ All notable changes to this project will be documented in this file. This change
 [Changes since 0.3.2](https://github.com/nickbauman/cljgae-template/compare/0.3.2...0.3.3)
 
 ## [0.3.2]
-### Fixes hypenation bug in project test harness. Drops snapshot.
+### Fixes hyphenation bug in project test harness. Drops snapshot.
 [Changes since 0.3.1](https://github.com/nickbauman/cljgae-template/compare/0.3.1-SNAPSHOT...0.3.2)
 
 ## [0.3.1-SNAPSHOT]
