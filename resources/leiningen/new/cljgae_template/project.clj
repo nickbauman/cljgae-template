@@ -9,7 +9,7 @@
                            [hiccup "1.0.5"]
                            [ring-server "0.5.0"]
                            [ring/ring-defaults "0.3.2"]
-                           [org.clojure/tools.logging "0.6.0"]
+                           [org.clojure/tools.logging "1.0.0"]
                            [org.clojure/data.json "1.0.0"]
                            [ch.qos.logback/logback-classic "1.2.3"]
                            [com.google.guava/guava "23.0"]
@@ -21,16 +21,16 @@
                                          com.google.http-client/google-http-client-jackson2
                                          com.google.api-client/google-api-client-appengine
                                          com.google.http-client/google-http-client]]
-                           [org.apache.httpcomponents/httpclient "4.5.11"]
-                           [com.google.api-client/google-api-client-appengine "1.30.8"
+                           [org.apache.httpcomponents/httpclient "4.5.12"]
+                           [com.google.api-client/google-api-client-appengine "1.30.9"
                             :exclusions [com.google.guava/guava-jdk5]]
-                           [com.google.oauth-client/google-oauth-client-appengine "1.30.5"
+                           [com.google.oauth-client/google-oauth-client-appengine "1.30.6"
                             :exclusions [com.google.guava/guava-jdk5]]
                            [com.google.http-client/google-http-client-appengine "1.34.2"
                             :exclusions [com.google.guava/guava-jdk5]]
                            [gaeclj-pq "0.1.2"]
                            [gaeclj-auth "0.1.0"]
-                           [gaeclj-ds "0.1.2"]
+                           [gaeclj-ds "0.1.3.1"]
                            [gaeclj-gcs "0.1.3"]]
 
             :java-source-paths ["src-java"]
