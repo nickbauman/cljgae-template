@@ -1,4 +1,4 @@
-(def appengine-version "1.9.48")
+(def appengine-version "2.0.20")
 
 (defproject {{name}} "0.1.0-SNAPSHOT"
             :description "{{name}} short description FIXME"
@@ -21,7 +21,7 @@
                                          com.google.http-client/google-http-client-jackson2
                                          com.google.api-client/google-api-client-appengine
                                          com.google.http-client/google-http-client]]
-                           [org.apache.httpcomponents/httpclient "4.5.12"]
+                           [org.apache.httpcomponents/httpclient "4.5.14"]
                            [com.google.api-client/google-api-client-appengine "1.30.9"
                             :exclusions [com.google.guava/guava-jdk5]]
                            [com.google.oauth-client/google-oauth-client-appengine "1.30.6"
@@ -48,6 +48,5 @@
              {:dependencies [[ring/ring-mock "0.4.0"]
                              [ring/ring-devel "1.8.0"]
                              [com.google.appengine/appengine-testing ~appengine-version]
-                             [com.google.appengine/appengine-api-labs ~appengine-version]
                              [com.google.appengine/appengine-api-stubs ~appengine-version]
                              [com.google.appengine/appengine-tools-sdk ~appengine-version]]}})

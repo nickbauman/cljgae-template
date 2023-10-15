@@ -1,18 +1,20 @@
 # {{name}}
 
-{{name}} long description FIXME
+{{name}} long description TODO
 
 ## Prerequisites
 
-You will need [FIXME][1]
+You will need [TODO][1]
 
-[1]: https://github.com/FIXME/FIXME
+[1]: https://github.com/TODO/TODO
 
 ## Building
 
 To build a deployable WAR:
 
-    > lein ring uberwar
+```shell
+lein ring uberwar
+```
 
 This requires that the App Engine Java SDK is installed locally and in your path.
 
@@ -20,13 +22,17 @@ This requires that the App Engine Java SDK is installed locally and in your path
 
 Through leiningen
 
-    > lein test
+```shell
+lein test
+```
 
 ## Running
 
 To Run locally:
 
-    > ./run-dev.sh
+```shell
+./run-dev.sh
+```
 
 This requires that the App Engine Java SDK is installed locally and in your path.
 
@@ -34,10 +40,12 @@ This requires that the App Engine Java SDK is installed locally and in your path
 
 To deploy to App Engine, make sure the project ID exists and has been initialized to the Java8 Runtime
 
-    > ./deploy.sh
+```shell
+./deploy.sh
+```
 
 This requires that the App Engine Java SDK is installed locally and in your path.
 
 ## License
 
-Copyright © 2016 FIXME
+Copyright © {{year}}

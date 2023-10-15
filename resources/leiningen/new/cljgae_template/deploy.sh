@@ -15,6 +15,6 @@ TARGET_DEPLOY=$DEPLOY_DIR/{{name}}-$APP_VERSION
 mkdir $TARGET_DEPLOY
 unzip -d $TARGET_DEPLOY target/{{name}}-$APP_VERSION-standalone.war
 
-export app.deploy.projectId={{name}} # FIXME make sure the project ID exists and has been initialized to the Java8 Runtime
+export app.deploy.projectId={{name}} # TODO make sure the project ID exists and has been initialized to the Java8 Runtime
 
 mvn package appengine:deployAll -e -X
