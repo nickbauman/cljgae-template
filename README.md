@@ -159,7 +159,7 @@ java.lang.RuntimeException: (create-CostStrategy ...) failed validation for prop
 
 ## License
 
-Copyright © 2016-2020 Peter Schwarz and Nick Bauman
+Copyright © 2016-2023 Nick Bauman and Peter Schwarz
 
 Distributed under the Eclipse Public License either version 1.0 or (at your 
 option) any later version.
