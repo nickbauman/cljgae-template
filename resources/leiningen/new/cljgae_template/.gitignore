@@ -1,0 +1,13 @@
+*.DS_Store
+*.class
+*.jar
+.idea
+/.lein-*
+/.nrepl-port
+/checkouts
+/classes
+/target
+cljgae-template.iml
+pom.xml.asc
+out
+*.iml

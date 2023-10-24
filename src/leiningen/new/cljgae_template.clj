@@ -1,5 +1,5 @@
 (ns leiningen.new.cljgae-template
-  (:require [clojure.java.io :refer [input-stream]]
+  (:require [clojure.java.io :refer [input-stream make-parents]]
             [leiningen.new.templates :refer [renderer name-to-path ->files slurp-resource]]
             [leiningen.core.main :as main]))
 
@@ -7,14 +7,16 @@
 
 (defn raw-copy
       "Use in case of binary files that just need to be copied verbatim.
-      (... the default renderer apparently tries to decode the file :/)"
-      [filename, data]
+      (... the default renderer apparently tries to decode the file, sadly)"
+      [filename]
       (input-stream (clojure.string/join "/" ["resources/leiningen/new/cljgae_template" filename])))
 
 (defn cljgae-template
   "Expands template vars over files, as needed"
-  [name]
+  [name org-id zone]
   (let [data {:name name
+              :org-id org-id
+              :zone zone
               :year (+ 1900 (.getYear (new java.util.Date)))
               :sanitized (name-to-path name)}]
     (main/info (str "Generating new cljgae-template project '" name "'"))
@@ -26,7 +28,7 @@
              ["src/{{sanitized}}/util.clj" (render "util.clj" data)]
              ["src/{{sanitized}}/view.clj" (render "view.clj" data)]
              ; tests
-             ["test/{{sanitized}}/test/file_example.jpg" (raw-copy "file_example.jpg", data)]
+             ["test/{{sanitized}}/test/file_example.jpg" (raw-copy "file_example.jpg")]
              ["test/{{sanitized}}/test/events.json" (render "events.json" data)]
              ["test/{{sanitized}}/test/fixtures.clj" (render "fixtures.clj" data)]
              ["test/{{sanitized}}/test/handler.clj" (render "test_handler.clj" data)]
@@ -40,7 +42,9 @@
              ["war-resources/WEB-INF/queue.xml" (render "queue.xml" data)]
              ["war-resources/web.xml" (render "web.xml" data)]
              ; root of project
+             ["project-setup/create_project_and_enable_appengine.tf" (render "create_project_and_enable_appengine.tf" data)]
              ["README.md" (render "README.md" data)]
+             [".gitignore" (render ".gitignore" data)]
              ["deploy.sh" (render "deploy.sh" data)]
              ["run-dev.sh" (render "run-dev.sh" data)]
              ["pom.xml" (render "pom.xml" data)]

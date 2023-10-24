@@ -23,7 +23,11 @@ lein install
 
 ## Usage
 
-    lein new cljgae-template <project name>
+    lein new cljgae-template <project name> <project organization ID> <availability zone>
+
+Example:
+
+    lein new cljgae-template my-unique-project-name 1234567 us-central
 
 Creates a new appengine project on disk under dir <project name> that should run
 on the latest GAE Java8 Runtime. It has a few routes with corresponding tests which show the 
