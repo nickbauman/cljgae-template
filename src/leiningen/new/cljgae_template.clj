@@ -13,10 +13,11 @@
 
 (defn cljgae-template
   "Expands template vars over files, as needed"
-  [name org-id zone]
+  [name org-id zone billing-account]
   (let [data {:name name
               :org-id org-id
               :zone zone
+              :billing-account billing-account
               :year (+ 1900 (.getYear (new java.util.Date)))
               :sanitized (name-to-path name)}]
     (main/info (str "Generating new cljgae-template project '" name "'"))
@@ -42,7 +43,7 @@
              ["war-resources/WEB-INF/queue.xml" (render "queue.xml" data)]
              ["war-resources/web.xml" (render "web.xml" data)]
              ; root of project
-             ["project-setup/create_project_and_enable_appengine.tf" (render "create_project_and_enable_appengine.tf" data)]
+             ["quickstart/create_project_and_enable_appengine.tf" (render "create_project_and_enable_appengine.tf" data)]
              ["README.md" (render "README.md" data)]
              [".gitignore" (render ".gitignore" data)]
              ["deploy.sh" (render "deploy.sh" data)]

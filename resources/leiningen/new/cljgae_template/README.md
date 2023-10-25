@@ -8,21 +8,22 @@ You will need [TODO][1]
 
 [1]: https://github.com/TODO/TODO
 
-## One-time setup instructions
+## One-time quickstart instructions
 
-From directory `project-setup` use terraform script to create the appengine project and enable appengine.
+*NOTE:* this is meant to be a "quickstart" to get an app engine app up and running. It doesn't use best practices 
+regarding secrets handling and terraform variable substitution, which is beyond the scope of this tooling.
 
-First create the project to house the app engine app (unless you already have one)
+There's a basic terraform script that will create the app engine project and enable app engine in it.
 
-Then execute, in succession, allowing each step to complete, the following terraform operations
+From directory `quickstart`, execute, in succession, allowing each step to complete, the following terraform operations:
 
-```shell
+```text
 terraform init
 ````
-```shell 
+```text 
 terraform plan -out create_project_enable_appengine.plan.zip
 ```
-```shell 
+```text 
 terraform apply "create_project_enable_appengine.plan.zip"
 ````
 
