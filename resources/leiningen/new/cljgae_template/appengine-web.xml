@@ -4,6 +4,7 @@
     <module>default</module>
     <version>1</version>
     <runtime>java11</runtime>
+    <app-engine-apis>true</app-engine-apis>
     <url-stream-handler>urlfetch</url-stream-handler>
     <staging>
         <enable-jar-classes>true</enable-jar-classes>
