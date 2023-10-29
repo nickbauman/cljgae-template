@@ -1,7 +1,7 @@
 # cljgae-template
 
 A Leiningen template for creating useful and productive Google App Engine apps in Clojure 
-using the GAE Java SDK.
+using the GAE Java SDK (supports 11 and 17 runtimes with bundled services)
 
 [![Clojars Project](https://img.shields.io/clojars/v/org.clojars.nickbauman/cljgae-template.svg)](https://clojars.org/org.clojars.nickbauman/cljgae-template)
 
@@ -9,9 +9,9 @@ using the GAE Java SDK.
 
 Leiningen Clojars dependency:
 
-[org.clojars.nickbauman/cljgae-template "0.4.1"]
+[org.clojars.nickbauman/cljgae-template "1.0.0"]
 
-## Installation
+## Template Installation
 
 To use this template locally, installing it into your library cache - ~/.m2/repository/. 
 
@@ -23,7 +23,11 @@ lein install
 
 ## Usage
 
-    lein new cljgae-template <project name>
+    lein new cljgae-template <java-runtime> <project name> <project organization ID> <availability zone>
+
+Example:
+
+    lein new cljgae-template 17 my-unique-project-name 1234567 us-central
 
 Creates a new appengine project on disk under dir <project name> that should run
 on the latest GAE Java8 Runtime. It has a few routes with corresponding tests which show the 
