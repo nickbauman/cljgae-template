@@ -3,7 +3,7 @@
     <application>{{name}}</application>
     <module>default</module>
     <version>1</version>
-    <runtime>java11</runtime>
+    <runtime>java{{java-runtime}}</runtime>
     <app-engine-apis>true</app-engine-apis>
     <url-stream-handler>urlfetch</url-stream-handler>
     <staging>

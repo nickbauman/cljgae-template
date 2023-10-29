@@ -13,8 +13,9 @@
 
 (defn cljgae-template
   "Expands template vars over files, as needed"
-  [name org-id zone billing-account]
-  (let [data {:name name
+  [name org-id zone billing-account java-runtime]
+  (let [data {:java-runtime java-runtime
+              :name name
               :org-id org-id
               :zone zone
               :billing-account billing-account
