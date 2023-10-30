@@ -5,7 +5,7 @@ using the GAE Java SDK (supports 11 and 17 runtimes with bundled services)
 
 [![Clojars Project](https://img.shields.io/clojars/v/org.clojars.nickbauman/cljgae-template.svg)](https://clojars.org/org.clojars.nickbauman/cljgae-template)
 
-## Release 0.4.1
+## Release 1.0.0
 
 Leiningen Clojars dependency:
 
@@ -30,8 +30,8 @@ Example:
     lein new cljgae-template 17 my-unique-project-name 1234567 us-central
 
 Creates a new appengine project on disk under dir <project name> that should run
-on the latest GAE Java8 Runtime. It has a few routes with corresponding tests which show the 
-usage of a few appengine APIs such as 
+on the Gen2 OSS Runtimes, (Java11/17 with bundled services). It has a few routes 
+with corresponding tests which show the usage of a few appengine APIs such as 
 
 * Google Cloud Storage (via file upload test example)
 * The datastore, including a Clojure DSL for querying the datastore (see 
