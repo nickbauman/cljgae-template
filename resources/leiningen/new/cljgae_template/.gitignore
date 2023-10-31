@@ -1,5 +1,6 @@
 *.DS_Store
 *.class
+*.iml
 *.jar
 .idea
 /.lein-*
@@ -10,5 +11,4 @@
 cljgae-template.iml
 pom.xml.asc
 out
-*.iml
 quickstart/
