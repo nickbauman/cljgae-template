@@ -5,11 +5,11 @@ using the GAE Java SDK (supports 11 and 17 runtimes with bundled services)
 
 [![Clojars Project](https://img.shields.io/clojars/v/org.clojars.nickbauman/cljgae-template.svg)](https://clojars.org/org.clojars.nickbauman/cljgae-template)
 
-## Release 1.0.1
+## Release 1.0.2
 
 Leiningen Clojars dependency:
 
-[org.clojars.nickbauman/cljgae-template "1.0.1"]
+[org.clojars.nickbauman/cljgae-template "1.0.2"]
 
 ## Template Installation
 
@@ -23,11 +23,11 @@ lein install
 
 ## Usage
 
-    lein new cljgae-template <java-runtime> <project name> <project organization ID> <availability zone>
+    lein new cljgae-template <project name> <project organization ID> <availability zone> <billing-account> <java-runtime>
 
 Example:
 
-    lein new cljgae-template 17 my-unique-project-name 1234567 us-central
+    lein new cljgae-template a4d07e6a3-f194-07d0-8a4b-1695 456350996759 us-central 4D2-1D73A5-012F81-6E5 17
 
 Creates a new appengine project on disk under dir <project name> that should run
 on the Gen2 OSS Runtimes, (Java11/17 with bundled services). It has a few routes 
