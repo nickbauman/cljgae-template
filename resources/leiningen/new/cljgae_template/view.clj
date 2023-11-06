@@ -20,7 +20,7 @@
                            (f/formatters :rfc822)
                            (t/time-zone-for-id "America/Chicago")))
 
-(defn base [request title heading & more]
+(defn base [_request title heading & more]
   (page/html5 
    [:head
     [:title title]

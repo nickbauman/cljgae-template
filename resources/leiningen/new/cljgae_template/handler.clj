@@ -1,21 +1,17 @@
 (ns {{name}}.handler
   (:require [compojure.core :refer [defroutes routes POST GET]]
-            [compojure.handler :as handler]
             [compojure.route :as route]
             [ring.middleware.defaults :refer :all]
-            [ring.middleware.multipart-params :as multipart-params]
             [ring.middleware.multipart-params.byte-array :as upload-store]
             [ring.util.response :as response]
             [clojure.data.json :as json]
             [clojure.tools.logging :as log]
             [clj-time.core :as t]
-            [clojure.java.io :as io]
             [gaeclj.env :as env]
             [gaeclj.gcs :as gcs]
             [gaeclj.ds :as db]
             [gaeclj.env :as env]
             [gaeclj.push-queue :as pq]
-            [{{name}}.util :as u]
             [{{name}}.model :as m]
             [{{name}}.view :refer [home file-upload-form]])
   (:import [java.io InputStreamReader]))
@@ -26,7 +22,7 @@
 (defn destroy []
   (log/info "{{name}} is shutting down"))
 
-(defn do-save 
+(defn do-save
   "Saves a given file to the app's GCS bucket.
   - params: the request as defined by the multipart middleware with a bytearray store"
   [params]
@@ -47,7 +43,7 @@
   [request]
   (let [data (json/read (InputStreamReader. (:body request)))]
     (loop [[d & dd] data]
-      (pq/add-to-queue 
+      (pq/add-to-queue
        (pq/get-queue "default")
        (apply pq/task-options "/save-json" 1000 (mapcat #(identity %) d)))
       (if (not (seq dd))
@@ -69,7 +65,7 @@
   (route/not-found "Page not found"))
 
 (defn wrap-middleware [routes]
-  (let [modified-defaults 
+  (let [modified-defaults
         (-> site-defaults
             (assoc :params {:multipart {:store (upload-store/byte-array-store)}}) ; TODO use GCS directly instead of the byte array store
             (assoc :security {:anti-forgery false}))] ; TODO AF might be desired, get it working with test harness
