@@ -5,11 +5,11 @@ using the GAE Java SDK (supports 11 and 17 runtimes with bundled services)
 
 [![Clojars Project](https://img.shields.io/clojars/v/org.clojars.nickbauman/cljgae-template.svg)](https://clojars.org/org.clojars.nickbauman/cljgae-template)
 
-## Release 1.0.2
+## Release 1.0.3
 
 Leiningen Clojars dependency:
 
-[org.clojars.nickbauman/cljgae-template "1.0.2"]
+[org.clojars.nickbauman/cljgae-template "1.0.3"]
 
 ## Template Installation
 
