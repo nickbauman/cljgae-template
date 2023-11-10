@@ -9,7 +9,7 @@
   (:require [clojure.java.io :as io])
   (:use clojure.test
    ring.mock.request
-   cmcoop.handler
+   {{name}}.handler
    gaeclj.gcs))
 
 (defn delete-recursively [fname]
