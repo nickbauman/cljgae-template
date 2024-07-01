@@ -11,7 +11,7 @@
                 [ring/ring-defaults "0.4.0"]
                 [org.clojure/tools.logging "1.2.4"]
                 [org.clojure/data.json "2.4.0"]
-                [ch.qos.logback/logback-classic "1.4.11"]
+                [ch.qos.logback/logback-classic "1.4.12"]
                 [com.google.guava/guava "32.1.3-jre"]
                 [com.google.appengine/appengine-api-1.0-sdk ~appengine-version]
                 [com.google.appengine.tools/appengine-gcs-client "0.8.3"
