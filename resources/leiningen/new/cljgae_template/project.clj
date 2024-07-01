@@ -4,14 +4,14 @@
  :description "{{name}} short description FIXME"
  :url "http://{{name}}.appspot.com/"             ; make sure this is a real project and has been initialized to the java8 runtime
  :javac-options ["-target" "1.11" "-source" "1.11" "-Xlint:-options"]
- :dependencies [[org.clojure/clojure "1.11.1"]
-                [compojure "1.7.0"]
+ :dependencies [[org.clojure/clojure "1.11.3"]
+                [compojure "1.7.1"]
                 [hiccup "1.0.5"]
                 [ring-server "0.5.0"]
-                [ring/ring-defaults "0.4.0"]
-                [org.clojure/tools.logging "1.2.4"]
-                [org.clojure/data.json "2.4.0"]
-                [ch.qos.logback/logback-classic "1.4.12"]
+                [ring/ring-defaults "0.5.0"]
+                [org.clojure/tools.logging "1.3.0"]
+                [org.clojure/data.json "2.5.0"]
+                [ch.qos.logback/logback-classic "1.5.6"]
                 [com.google.guava/guava "32.1.3-jre"]
                 [com.google.appengine/appengine-api-1.0-sdk ~appengine-version]
                 [com.google.appengine.tools/appengine-gcs-client "0.8.3"
@@ -22,11 +22,11 @@
                               com.google.api-client/google-api-client-appengine
                               com.google.http-client/google-http-client]]
                 [org.apache.httpcomponents/httpclient "4.5.14"]
-                [com.google.api-client/google-api-client-appengine "2.2.0"
+                [com.google.api-client/google-api-client-appengine "2.6.0"
                  :exclusions [com.google.guava/guava-jdk5]]
-                [com.google.oauth-client/google-oauth-client-appengine "1.34.1"
+                [com.google.oauth-client/google-oauth-client-appengine "1.36.0"
                  :exclusions [com.google.guava/guava-jdk5]]
-                [com.google.http-client/google-http-client-appengine "1.43.3"
+                [com.google.http-client/google-http-client-appengine "1.44.2"
                  :exclusions [com.google.guava/guava-jdk5]]
                 [gaeclj-pq "0.1.3"]
                 [gaeclj-auth "0.1.1"]
