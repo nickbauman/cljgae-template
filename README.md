@@ -1,15 +1,18 @@
 # cljgae-template
 
-A Leiningen template for creating useful and productive Google App Engine apps in Clojure 
-using the GAE Java SDK (supports 11 and 17 runtimes with bundled services)
+A Leiningen template for creating Google App Engine apps in Clojure using the GAE Java SDK (supports 11 and 17 runtimes with bundled services)
 
 [![Clojars Project](https://img.shields.io/clojars/v/org.clojars.nickbauman/cljgae-template.svg)](https://clojars.org/org.clojars.nickbauman/cljgae-template)
 
-## Release 1.0.3
+Google App Engine is the first "Serverless" web PaaS the world has ever seen, launched as an opinionated, fully managed service 16 years ago. 
+Designed to scale out-of-the-box, with many more features teams would take years to assemble. This temaplate is meant to get you started  on 
+appengine with Clojure quickly.
+
+## Release 1.0.3.1
 
 Leiningen Clojars dependency:
 
-[org.clojars.nickbauman/cljgae-template "1.0.3"]
+[org.clojars.nickbauman/cljgae-template "1.0.3.1"]
 
 ## Template Installation
 
@@ -163,7 +166,7 @@ java.lang.RuntimeException: (create-CostStrategy ...) failed validation for prop
 
 ## License
 
-Copyright © 2016-2023 Nick Bauman and Peter Schwarz
+Copyright © 2016-2024 Nick Bauman and Peter Schwarz
 
 Distributed under the Eclipse Public License either version 1.0 or (at your 
 option) any later version.
