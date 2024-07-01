@@ -10,4 +10,6 @@
 pom.xml.asc
 out
 *.iml
-
+.clj-kondo/
+.lsp/
+.portal/
