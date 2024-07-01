@@ -39,7 +39,7 @@ with corresponding tests which show the usage of a few appengine APIs such as
 * Google Cloud Storage (via file upload test example)
 * The datastore, including a Clojure DSL for querying the datastore (see 
   `db.clj` test for examples)
-* The App Identity Service API (via "/" route) 
+* The App Identity Service API (via "/" route) q
 * Asyncronous task queues / AKA appengine"push queues" (via a JSON request of 
   a "large" list of data points)
 * User services with user state examples
@@ -157,7 +157,6 @@ java.lang.RuntimeException: (create-CostStrategy ...) failed validation for prop
 
 ## Future directions
 
-* Firestore dialect
 * Postgres dialect
 * Add support for projections
 * More comprehensive examples of task queues
