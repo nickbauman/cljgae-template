@@ -5,7 +5,7 @@ A Leiningen template for creating Google App Engine apps in Clojure using the GA
 [![Clojars Project](https://img.shields.io/clojars/v/org.clojars.nickbauman/cljgae-template.svg)](https://clojars.org/org.clojars.nickbauman/cljgae-template)
 
 Google App Engine is the first "Serverless" web PaaS the world has ever seen, launched as an opinionated, fully managed service 16 years ago. 
-Designed to scale out-of-the-box, with many more features teams would take years to assemble. This temaplate is meant to get you started  on 
+Designed to scale out-of-the-box, with many more features teams would take years to assemble. This template is meant to get you started on 
 appengine with Clojure quickly.
 
 ## Release 1.0.3.1
