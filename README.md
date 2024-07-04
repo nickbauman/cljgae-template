@@ -119,7 +119,7 @@ emphasis on Clojure's more functional idiom.) Queries return a lazy sequence.
 Validation of datastore entity models is optional. Adding validation involves putting a vector of keys that match your 
 model properties followed by a fully qualified function property. For example:
 
-```clojure 
+```clojure
 (ns gaeclj.example.valid
   (:require [gaeclj.ds :refer [defentity]]))
 
@@ -130,12 +130,12 @@ model properties followed by a fully qualified function property. For example:
             strategy-description
             ordered-member-uuids
             ordered-percentages]
-           [:uuid                 gaeclj.valid/valid-uuid?
-            :create-date          gaeclj.valid/long?
-            :cost-uuid            gaeclj.valid/valid-uuid?
-            :strategy-description gaeclj.valid/string-or-nil?
-            :ordered-member-uuids gaeclj.valid/repeated-uuid?
-            :ordered-amounts      gaeclj.valid/repeated-longs?])
+           [:uuid                 (requiring-resolve `gaeclj.valid/valid-uuid-str?)
+            :create-date          (requiring-resolve gaeclj.valid/long?)
+            :cost-uuid            (requiring-resolve `gaeclj.valid/valid-uuid-str?)
+            :strategy-description (requiring-resolve `gaeclj.valid/string-or-nil?)
+            :ordered-member-uuids (requiring-resolve `gaeclj.valid/repeated-uuid?)
+            :ordered-amounts      (requiring-resolve `gaeclj.valid/repeated-longs?)])
 ```
 
 Creating a CostStrategy like this
