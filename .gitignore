@@ -13,3 +13,4 @@ out
 .clj-kondo/
 .lsp/
 .portal/
+.vscode
