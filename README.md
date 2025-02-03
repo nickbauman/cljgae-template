@@ -4,8 +4,8 @@ A Leiningen template for creating Google App Engine apps in Clojure using the GA
 
 [![Clojars Project](https://img.shields.io/clojars/v/org.clojars.nickbauman/cljgae-template.svg)](https://clojars.org/org.clojars.nickbauman/cljgae-template)
 
-Google App Engine is the first "Serverless" web PaaS the world has ever seen, launched as an opinionated, fully managed service 16 years ago. 
-Designed to scale out-of-the-box, with many more features teams would take years to assemble. This template is meant to get you started on 
+Google App Engine is the first "Serverless" web PaaS the world has ever seen, launched as an opinionated, fully managed service 16 years ago.
+Designed to scale out-of-the-box, with many more features teams would take years to assemble. This template is meant to get you started on
 appengine with Clojure quickly.
 
 ## Release 1.0.3.1
@@ -16,7 +16,7 @@ Leiningen Clojars dependency:
 
 ## Template Installation
 
-To use this template locally, installing it into your library cache - ~/.m2/repository/. 
+To use this template locally, installing it into your library cache - ~/.m2/repository/.
 
 From the root of the template project, run the following command:
 
@@ -26,21 +26,25 @@ lein install
 
 ## Usage
 
-    lein new cljgae-template <project name> <project organization ID> <availability zone> <billing-account> <java-runtime>
+```shell
+ lein new cljgae-template <project name> <project organization ID> <availability region> <billing-account> <java-runtime>
+```
 
-Example:
+Example (NB these are NOT real values, they just look like ones)
 
-    lein new cljgae-template a4d07e6a3-f194-07d0-8a4b-1695 456350996759 us-central 4D2-1D73A5-012F81-6E5 17
+```shell
+lein new cljgae-template a4d07e6a3-f194-07d0-8a4b-1695 456350996759 us-central 4D2-1D73A5-012F81-6E5 17
+```
 
-Creates a new appengine project on disk under dir <project name> that should run
-on the Gen2 OSS Runtimes, (Java11/17 with bundled services). It has a few routes 
-with corresponding tests which show the usage of a few appengine APIs such as 
+Creates a new appengine project on disk under dir `<project name>` that should run
+on the Gen2 OSS Runtimes, (Java11/17 with bundled services). It has a few routes
+with corresponding tests which show the usage of a few appengine APIs such as
 
 * Google Cloud Storage (via file upload test example)
-* The datastore, including a Clojure DSL for querying the datastore (see 
+* The datastore, including a Clojure DSL for querying the datastore (see
   `db.clj` test for examples)
 * The App Identity Service API (via "/" route)
-* Asyncronous task queues / AKA appengine"push queues" (via a JSON request of 
+* Asyncronous task queues / AKA appengine"push queues" (via a JSON request of
   a "large" list of data points)
 * User services with user state examples
 
@@ -48,7 +52,7 @@ With unit tests for each. All examples also run on the dev appserver.
 
 ## Datastore query language
 
-A Clojure DSL has been developed inspired by the Python NDB library (with an 
+A Clojure DSL has been developed inspired by the Python NDB library (with an
 emphasis on Clojure's more functional idiom.) Queries return a lazy sequence.
 
 ### Examples
@@ -116,8 +120,7 @@ emphasis on Clojure's more functional idiom.) Queries return a lazy sequence.
 
 ### Validation
 
-Validation of datastore entity models is optional. Adding validation involves putting a vector of keys that match your 
-model properties followed by a fully qualified function property. For example:
+Validation of datastore entity models is optional. Adding validation involves putting a vector of keys that match your model properties followed by a fully qualified function property. For example:
 
 ```clojure
 (ns gaeclj.example.valid
@@ -148,7 +151,7 @@ Creating a CostStrategy like this
                                    [(str (uuid/v1)) (str (uuid/v1))]
                                    ["foo" "bar"]) ; not valid
 ```
- 
+
 ... would cause a `RuntimeException` citing the two properties:
 
 ```text
@@ -167,5 +170,5 @@ java.lang.RuntimeException: (create-CostStrategy ...) failed validation for prop
 
 Copyright © 2016-2024 Nick Bauman and Peter Schwarz
 
-Distributed under the Eclipse Public License either version 1.0 or (at your 
+Distributed under the Eclipse Public License either version 1.0 or (at your
 option) any later version.

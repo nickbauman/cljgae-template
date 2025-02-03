@@ -20,10 +20,12 @@ From directory `quickstart`, execute, in succession, allowing each step to compl
 ```text
 terraform init
 ````
-```text 
+
+```text
 terraform plan -out create_project_enable_appengine.plan.zip
 ```
-```text 
+
+```text
 terraform apply "create_project_enable_appengine.plan.zip"
 ````
 
