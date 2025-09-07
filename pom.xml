@@ -18,7 +18,7 @@
     <url>https://github.com/nickbauman/cljgae-template</url>
     <connection>scm:git:git://github.com/nickbauman/cljgae-template.git</connection>
     <developerConnection>scm:git:ssh://git@github.com/nickbauman/cljgae-template.git</developerConnection>
-    <tag>39fb0430fa0fbaf95691503ea33c2f537b57e287</tag>
+    <tag>86b4a532f89d6aa0f1ded9762dec5543e97e0f06</tag>
   </scm>
   <build>
     <sourceDirectory>src</sourceDirectory>

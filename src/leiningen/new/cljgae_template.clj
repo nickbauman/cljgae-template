@@ -38,11 +38,12 @@
              ["test/{{sanitized}}/test/util.clj" (render "test_util.clj" data)]
              ; WEB-INF
              ["war-resources/WEB-INF/datastore-indexes.xml" (render "datastore-indexes.xml" data)]
-             ["war-resources/WEB-INF/appengine-web.xml" (render "appengine-web.xml" data)]
              ["war-resources/WEB-INF/cron.xml" (render "cron.xml" data)]
              ["war-resources/WEB-INF/logging.properties" (render "logging.properties" data)]
              ["war-resources/WEB-INF/queue.xml" (render "queue.xml" data)]
              ["war-resources/web.xml" (render "web.xml" data)]
+             ; App Engine configuration
+             ["app.yaml" (render "app.yaml" data)]
              ; VS Code configuration
              [".vscode/settings.json" (render "vscode_settings.json" data)]
              ["{{name}}.code-workspace" (render "vscode_workspace.json" data)]

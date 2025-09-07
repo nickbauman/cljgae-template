@@ -1,0 +1,28 @@
+runtime: java{{java-runtime}}
+
+# Environment variables
+env_variables:
+  GOOGLE_CLOUD_PROJECT: {{name}}
+
+# Instance configuration
+instance_class: F1
+automatic_scaling:
+  min_instances: 0
+  max_instances: 10
+  target_cpu_utilization: 0.6
+
+# Health check configuration
+readiness_check:
+  path: "/"
+  check_interval_sec: 5
+  timeout_sec: 4
+  failure_threshold: 2
+  success_threshold: 2
+  app_start_timeout_sec: 300
+
+liveness_check:
+  path: "/"
+  check_interval_sec: 30
+  timeout_sec: 4
+  failure_threshold: 4
+  success_threshold: 2
