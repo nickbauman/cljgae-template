@@ -1,0 +1,20 @@
+{
+    "folders": [
+        {
+            "name": "{{name}}",
+            "path": "."
+        }
+    ],
+    "settings": {
+        "calva.repl.autoConnect": false,
+        "calva.paredit.defaultKeyMap": "original"
+    },
+    "extensions": {
+        "recommendations": [
+            "betterthantomorrow.calva",
+            "clojure-lsp.clojure-lsp",
+            "ms-vscode.vscode-json",
+            "redhat.vscode-xml"
+        ]
+    }
+}

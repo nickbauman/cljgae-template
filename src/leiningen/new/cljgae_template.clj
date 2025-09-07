@@ -43,6 +43,9 @@
              ["war-resources/WEB-INF/logging.properties" (render "logging.properties" data)]
              ["war-resources/WEB-INF/queue.xml" (render "queue.xml" data)]
              ["war-resources/web.xml" (render "web.xml" data)]
+             ; VS Code configuration
+             [".vscode/settings.json" (render "vscode_settings.json" data)]
+             ["{{name}}.code-workspace" (render "vscode_workspace.json" data)]
              ; root of project
              ["quickstart/create_project_and_enable_appengine.tf" (render "create_project_and_enable_appengine.tf" data)]
              ["README.md" (render "README.md" data)]

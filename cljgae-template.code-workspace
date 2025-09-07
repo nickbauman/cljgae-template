@@ -1,0 +1,25 @@
+{
+    "folders": [
+        {
+            "name": "cljgae-template",
+            "path": "."
+        }
+    ],
+    "settings": {
+        "calva.repl.autoConnect": false,
+        "calva.paredit.defaultKeyMap": "original",
+        "files.exclude": {
+            "**/target/**": true,
+            "**/.lein-*": true,
+            "**/.clj-kondo/.cache/**": true,
+            "**/.lsp/.cache/**": true
+        }
+    },
+    "extensions": {
+        "recommendations": [
+            "betterthantomorrow.calva",
+            "clojure-lsp.clojure-lsp",
+            "ms-vscode.vscode-json"
+        ]
+    }
+}

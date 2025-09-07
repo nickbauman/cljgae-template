@@ -9,8 +9,7 @@
             [clj-time.core :as t]
             [gaeclj.env :as env]
             [gaeclj.gcs :as gcs]
-            [gaeclj.ds :as db]
-            [gaeclj.env :as env]
+            [gaeclj.ds :as db] 
             [gaeclj.push-queue :as pq]
             [{{name}}.model :as m]
             [{{name}}.view :refer [home file-upload-form]])

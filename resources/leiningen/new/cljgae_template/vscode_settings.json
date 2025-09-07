@@ -1,0 +1,32 @@
+{
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "calva.paredit.defaultKeyMap": "original", 
+    "calva.fmt.newIndentEngine": true,
+    "calva.repl.autoConnect": false,
+    "calva.repl.connectSequence": [
+        {
+            "name": "{{name}} - Leiningen",
+            "projectType": "Leiningen",
+            "menuSelections": {
+                "leinProfiles": ["dev"]
+            }
+        }
+    ],
+    "files.associations": {
+        "*.clj": "clojure",
+        "*.cljs": "clojure", 
+        "*.cljc": "clojure",
+        "*.edn": "clojure"
+    },
+    "clojure-lsp.enable": true,
+    "clojure-lsp.clean-ns-on-save": false,
+    "editor.formatOnSave": false,
+    "calva.highlight.enableBracketColors": true,
+    "files.exclude": {
+        "**/target/**": true,
+        "**/.lein-*": true,
+        "**/war-resources/WEB-INF/classes/**": true,
+        "**/.clj-kondo/.cache/**": true,
+        "**/.lsp/.cache/**": true
+    }
+}
