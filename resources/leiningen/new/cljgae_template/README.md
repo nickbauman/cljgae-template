@@ -59,15 +59,51 @@ This requires that the App Engine Java SDK is installed locally and in your path
 
 ## Deploying
 
-To deploy to App Engine, make sure the project ID exists, appenegine is enabled, its permissions configured, and have 
-been initialized to the Java11 Runtime. If you use the "create project" terraform script to do this for you, you should 
-be all set.
+To deploy to App Engine:
+
+### Prerequisites
+1. Make sure you have the [Google Cloud CLI](https://cloud.google.com/sdk/docs/install) installed
+2. Authenticate with Google Cloud:
+   ```shell
+   gcloud auth login
+   ```
+3. Set your project ID:
+   ```shell
+   gcloud config set project {{name}}
+   ```
+4. Ensure App Engine is enabled for your project (the quickstart terraform script does this automatically)
+
+### Deploy your application
+
+Build and deploy using the modern approach:
+
+```shell
+# Build the application
+lein ring uberjar
+
+# Deploy to App Engine
+gcloud app deploy app.yaml
+```
+
+Or use the provided deployment script:
 
 ```shell
 ./deploy.sh
 ```
 
-This requires that the App Engine Java SDK is installed locally and in your path.
+### View your deployed application
+
+```shell
+gcloud app browse
+```
+
+This will open your deployed application in your default web browser.
+
+### View logs
+
+```shell
+gcloud app logs tail -s default
+```
 
 ## License
 
