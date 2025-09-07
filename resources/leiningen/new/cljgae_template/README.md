@@ -47,15 +47,35 @@ Through leiningen
 lein test
 ```
 
-## Running
+## Running Locally
 
-To Run locally:
+### Using the development script:
 
 ```shell
 ./run-dev.sh
 ```
 
-This requires that the App Engine Java SDK is installed locally and in your path.
+This will:
+1. Build your application as an executable JAR
+2. Start the local App Engine development server
+3. Make your app available at http://localhost:8080
+4. Provide an admin console at http://localhost:8000
+
+### Manual local development:
+
+Alternatively, you can run the development server manually:
+
+```shell
+# Build the application
+lein ring uberjar
+
+# Run with gcloud
+gcloud app run app.yaml --host=localhost --port=8080
+```
+
+### Requirements:
+- [Google Cloud CLI](https://cloud.google.com/sdk/docs/install) with App Engine components
+- Java {{java-runtime}} or later
 
 ## Deploying
 

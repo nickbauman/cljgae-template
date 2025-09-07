@@ -1,17 +1,22 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-DEPLOY_DIR="target"
-APP_VERSION=0.1.0-SNAPSHOT
+set -o errexit
+set -o nounset
+set -o pipefail
 
-if [ -d $DEPLOY_DIR ]
-    then
-        rm -r $DEPLOY_DIR
-fi
+echo "Starting {{name}} in development mode..."
+echo "Building application..."
+lein clean
+lein ring uberjar
 
-lein ring uberwar
+echo "Setting up development environment..."
+export PORT=8080
+export GOOGLE_CLOUD_PROJECT={{name}}
+export GAE_ENV=development
 
-TARGET_DEPLOY=$DEPLOY_DIR/{{name}}-$APP_VERSION
-mkdir $TARGET_DEPLOY
-unzip -d $TARGET_DEPLOY target/{{name}}-$APP_VERSION-standalone.war
+echo "Application will be available at: http://localhost:8080"
+echo "Press Ctrl+C to stop the server"
+echo ""
 
-mvn appengine:run
+# Run the JAR directly for fast development
+java -Dfile.encoding=UTF-8 -jar target/{{name}}-*-standalone.jar

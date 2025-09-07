@@ -53,5 +53,6 @@
              [".gitignore" (render ".gitignore" data)]
              ["deploy.sh" (render "deploy.sh" data)]
              ["run-dev.sh" (render "run-dev.sh" data)]
+             ["run-dev-gae.sh" (render "run-dev-gae.sh" data)]
              ["pom.xml" (render "pom.xml" data)]
              ["project.clj" (render "project.clj" data)])))
