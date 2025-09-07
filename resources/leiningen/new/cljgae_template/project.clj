@@ -1,4 +1,4 @@
-(def appengine-version "2.0.20")
+(def appengine-version "2.0.31") ; this revs FREQUENTLY
 
 (defproject {{name}} "0.1.0-SNAPSHOT"
  :description "{{name}} short description FIXME"
